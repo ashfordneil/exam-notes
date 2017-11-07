@@ -1,0 +1,249 @@
+\documentclass[10pt, landscape, a4]{article}
+\usepackage{multicol}
+\usepackage{calc}
+\usepackage[landscape]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb}
+\usepackage{color,graphicx,overpic}
+\usepackage{hyperref}
+\usepackage{listings}
+
+% margins off
+\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm}
+
+% Redefine section commands to use less space
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+{-1ex plus -.5ex minus -.2ex}%
+{0.5ex plus .2ex}%x
+{\normalfont\large\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
+{-1explus -.5ex minus -.2ex}%
+{0.5ex plus .2ex}%
+{\normalfont\normalsize\bfseries}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{0mm}%
+{-1ex plus -.5ex minus -.2ex}%
+{1ex plus .2ex}%
+{\normalfont\small\bfseries}}
+\makeatother
+
+% no section numbers
+\setcounter{secnumdepth}{0}
+
+% indenting off
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt plus 0.5ex}
+
+% page numbers off
+\pagestyle{empty}
+
+\begin{document}
+\footnotesize
+\begin{multicols}{3}
+
+% multicol params
+\setlength{\premulticols}{1pt}
+\setlength{\postmulticols}{1pt}
+\setlength{\multicolsep}{1pt}
+\setlength{\columnsep}{2pt}
+
+\begin{center}
+\Large{\underline{COMP4403 Cheat Sheet}} \\
+\end{center}
+
+%% START HERE
+\section{Parsing Theory}
+\subsection{Regular Expressions}
+Grammar with rules of the form
+\[ A \rightarrow aB \]
+\[ A \rightarrow a \]
+\[ A \rightarrow \epsilon \]
+Can be parsed with a finite state machine.
+
+\subsection{Context Free Grammars}
+Grammar with rules of the form
+\[ A \rightarrow \alpha \]
+Can be parsed with a push down automata.
+
+\subsubsection{Associativity and Recursion}
+Recursive context-free grammars can be either left recursive or right recursive.
+Left recursive grammars create left associative parse trees, and vice versa.
+To turn from left recursive to right recursive:
+\begin{align*}
+A \rightarrow& A B \\
+A \rightarrow& C
+\end{align*}
+Becomes
+\begin{align*}
+A \rightarrow& C A' \\
+A' \rightarrow& B A' \\
+A' \rightarrow& \epsilon
+\end{align*}
+
+\subsection{EBNF to BNF}
+Optionals:
+\begin{align*}
+A \rightarrow& [ B ] \\
+A' \rightarrow& B \\
+A' \rightarrow& \epsilon
+\end{align*}
+
+Repetition:
+\begin{align*}
+A \rightarrow& \{ B \} \\
+A' \rightarrow& B A' \\
+A' \rightarrow& \epsilon
+\end{align*}
+
+\section{Finite Automata}
+\subsection{Regular Expression to NFA}
+\begin{description}
+\item[[a]] Epsilon joins from the start to the end, and the start to the start of $a$, and an epsilon join from the end of $a$ to the end.
+\item[$a*$] Epsilon joins from start to end, and to the start of $a$, an epsilon join from the end of $a$ to the end, and an epsilon join from the end to the start.
+\item[$a \mid b$] Epsilon joins from start to the starts of $a$ and $b$, and epsilon joins from the ends of $a$ and $b$ to the end.
+\item[$ab$] Epsilon join from the start to the start of $a$, an epsilon join from the end of $a$ to the start of $b$, and an epsilon join from the end of $b$ to the end.
+\end{description}
+
+\subsection{NFA to DFA}
+\begin{itemize}
+\item Each DFA state corresponds to a subset of the states of the NFA.
+\item The transition from a single DFA state on input $a$ is the union of the transition sets from each NFA state in that DFA state on input $a$.
+\item Any DFA state that contains an accepting state of the NFA is an accepting speed.
+\end{itemize}
+
+\section{Top-Down and Bottom-Up Parsing}
+\subsection{First Sets}
+    \[First(a) = \{ a \} \]
+If $\alpha$ is not nullable:
+    \[First(\alpha) = \{ a: Terminal \mid (\exists \beta \cdot \alpha \xrightarrow{*} a \beta ) \} \]
+If $\alpha$ is nullable:
+    \[First(\alpha) = \{ a: Terminal \mid (\exists \beta \cdot \alpha \xrightarrow{*} a \beta ) \}  \cup \{ \epsilon \}\]
+If $A \rightarrow \alpha_1 \mid \alpha_2$
+    \[First(A) = First(\alpha_1) \cup First(\alpha_2) \]
+If $A \rightarrow \alpha_1 \alpha_2$ and $\alpha_1$ is not nullable:
+    \[First(A) = First(\alpha_1) \]
+If $A \rightarrow \alpha_1 \alpha_2$ and $\alpha_1$ is nullable:
+    \[First(A) = (First(\alpha_1) - \{ \epsilon \} ) \cup First(\alpha_2) \]
+
+\subsection{Follow Sets}
+    \[Follow(N) = \{ a: Terminal \mid (\exists \alpha, \beta \cdot S\$ \xrightarrow{*} \alpha N a \beta) \} \]
+If $A \rightarrow \alpha N \beta$:
+    \[ Follow(N) \supseteq First(\beta) - \{ \epsilon \} \]
+If $A \rightarrow \alpha N \beta$ and $\beta$ is nullable:
+    \[ Follow(N) \supseteq Follow(A) \]
+
+\subsection{LL(1) Parsing}
+LL(1) parsing is left to right, produces leftmost derivations, and has 1 token of lookahead. This is a top down parser, and cannot parse left recursive grammars.
+
+In an LL(1) grammar, for all productions of the form $N \rightarrow \alpha_1 \mid \alpha_2$:
+\[ First(\alpha_1) \cap First(\alpha_2) = \{\} \]
+i.e. the first sets must be disjoint, and if $N$ is nullable:
+\[ First(N) \cap Follow(N) = \{ \} \]
+i.e. the first and follow sets of any nullable nonterminal must be disjoint.
+
+\subsection{LR(0) Parsing}
+LR(0) parsing is left to right, produces rightmost derivations, and has 0 tokens of lookahead. This is a bottom up parser.
+
+An LR(0) parser consists of a set of parsing kernels of the form:
+    \[ A \rightarrow \alpha \cdot \beta \]
+If $\beta = \epsilon$ then this parsing kernel is a reduction on the derivation $A \rightarrow \alpha \beta $.
+
+Otherwise this parsing item represents a shift to the next state.
+
+The states in an LR(0) state machine consist of a set of parsing kernels constructed as follows.
+\begin{enumerate}
+    \item Begin with an initial kernel given from either the start symbol or the previous state and shift input.
+    \item For all kernel items $A \rightarrow \alpha \cdot B \beta$, add a new kernel item for each production of $B$.
+    \item Continue step 2 until there are no more kernel items of this form.
+\end{enumerate}
+For each shift kernel in the state $A \rightarrow \alpha \cdot \beta$, a new state is constructed from that kernel after it recieves a single character from $\beta$.
+
+\subsection{LR(1) Parsing}
+LR(1) parsing is left to right, produces rightmost derivations, and has 1 token of lookahead. This is a bottom up parser.
+
+The parsing kernels of an LR(1) parser are pairs of LR(0) kernels and follow sets. The follow set of an LR(1) kernel is contextual, and depends on the production that kernel originates from.
+
+\subsection{LALR(1) Parsing}
+LALR(1) parsing is left to right, produces rightmost derivations, and has 1 token of lookahead. This is a bottom up parser.
+
+An LALR(1) state machine can be built from an LR(1) state machine as follows.
+\begin{enumerate}
+    \item Find states that have identical LR(0) components in their kernels.
+    \item Merge these states, the follow set of an LALR(1) kernel is the union of the follow sets of the states being merged.
+\end{enumerate}
+
+\subsection{Runtime for bottom-up parser}
+\begin{description}
+\item[begin] push $\$$ onto the stack, and then push the start state number (0) onto the stack.
+\item[shift] push the input symbol onto the stack, and then push the new state number onto the stack.
+\item[reduce] pop everything after the first symbol on the RHS (inclusive). Jump to the state at the top of the stack. Push the LHS onto the stack, transition on the LHS, and push the new state number onto the stack.
+\end{description}
+
+\section{Recursive Descent Parsing}
+\[ a \]
+\begin{lstlisting}[language=Java]
+tokens.match(Token.a);
+\end{lstlisting}
+
+\[ A \]
+\begin{lstlisting}[language=Java]
+parseA();
+\end{lstlisting}
+
+\[ A \mid B \] 
+\begin{lstlisting}[language=Java]
+if( tokens.isIn( first_set_of_A ) ) {
+    parseA();
+} else if( tokens.isIn( first_set_of_B ) ) {
+    parseB();
+} else {
+    error();
+}
+\end{lstlisting}
+
+\[ [ A ] \]
+\begin{lstlisting}[language=Java]
+if( tokens.isIn( first_set_of_A ) ) {
+    parseA();
+}
+\end{lstlisting}
+
+\[ \{ A \} \]
+\begin{lstlisting}[language=Java]
+while( tokens.isIn( first_set_of_A ) ) {
+    parseA();
+}
+\end{lstlisting}
+
+\section{Runtime Environment}
+\subsection{Stack Organisation}
+Types of parameter passing mechanisms:
+\begin{description}
+\item[Call by const] formal parameter is treated as a read only variable. At call time, the actual parameter's value is assigned to it.
+\item[Call by value] formal parameter is treated as a variable who's initial value is the value of the actual parameter.
+\item[Call by result] formal parameter is treated as a variable. The actual parameter is set to its final value.
+\item[Call by value-result] combination of previous two.
+\end{description}
+
+\subsection{Dynamic Dispatch}
+Classes have dynamic dispatch tables that store (1) references to parent classes and (2) function pointers for all methods.
+
+$this$ is handled by passing a pointer to the self to any (non-static) method.
+
+An instance of a class is represented by storing its fields alongside a pointer to its dynamic dispatch table.
+
+$super$ is handled statically.
+
+Both dynamic dispatch tables and instance representations store parent class properties first and child properties last, with predefined padding, so that pointer casts will remain valid.
+
+\subsection{Heap Organisation}
+Languages like C use manual memory allocation. This can cause errors such as:
+\begin{description}
+\item[Dangling references] Memory is freed but not all references to it are deleted. Access to this memory from a dangling reference causes a use-after-free error.
+\item[Memory fragmentation] The order of freeing and allocating memory can cause large blocks of unused memory to appear in the heap, making future allocation less efficient.
+\item[Memory leak] Destruction of a reference that doesn't involve freeing the associated memory can lead to a memory leak.
+\end{description}
+
+\section{Static Semantics}
+
+\end{multicols}
+\end{document}

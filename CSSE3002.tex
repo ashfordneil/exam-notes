@@ -1,0 +1,347 @@
+% 1 Page Cheat Sheet
+% Only the bare necessities go here
+
+\documentclass[10pt,landscape,a4]{article}
+\usepackage{multicol}
+\usepackage{calc}
+\usepackage[landscape]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb}
+\usepackage{color,graphicx,overpic}
+\usepackage{hyperref}
+
+% margins off
+\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm}
+
+% Redefine section commands to use less space
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+{-1ex plus -.5ex minus -.2ex}%
+{0.5ex plus .2ex}%x
+{\normalfont\large\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
+{-1explus -.5ex minus -.2ex}%
+{0.5ex plus .2ex}%
+{\normalfont\normalsize\bfseries}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{0mm}%
+{-1ex plus -.5ex minus -.2ex}%
+{1ex plus .2ex}%
+{\normalfont\small\bfseries}}
+\makeatother
+
+% no section numbers
+\setcounter{secnumdepth}{0}
+
+% indenting off
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt plus 0.5ex}
+
+% page numbers off
+\pagestyle{empty}
+
+\begin{document}
+\footnotesize
+\begin{multicols}{3}
+
+% multicol params
+\setlength{\premulticols}{1pt}
+\setlength{\postmulticols}{1pt}
+\setlength{\multicolsep}{1pt}
+\setlength{\columnsep}{2pt}
+
+\begin{center}
+\Large{\underline{CSSE3002 Cheat Sheet}} \\
+\end{center}
+
+%% START HERE
+\section{Ethics and Professionalism}
+Australian Computer Society (ACS)
+\begin{description}
+\item[Primary of Public Interest] place interest of public above personal, business or sectional interests.
+\item[Enhancement of Quality of Life] Strive to enhance quality of life of those affected.
+\item[Honesty] Honest representation of skills, knowledge, services and products.
+\item[Competence] Work competently and diligently for all stakeholders.
+\item[Professional Development] Enhance your own development and your colleagues and staff.
+\item[Professionalism] Enhance integrity of the ACS and respect of members for each other.
+\end{description}
+
+\section{SE Process}
+\subsection{Waterfall}
+\begin{description}
+    \item[Requirements] Define requirements.
+    \item[Analysis] Analyse requirements, find and fix any inconsistencies and unclear areas.
+    \item[Design] Create / plan the software architecture.
+    \item[Coding] Develop, prove and integrate the software.
+    \item[Testing] Systematically discover and debug defects, and prove the code is correct.
+    \item[Operations] Install, migrate, support and maintain the completed system.
+\end{description}
+
+\subsection{Spiral}
+\begin{description}
+    \item[Identification] \textbf{Initially} gathering business requirements.
+        \textbf{Subsequently} identification of system requirements, subsystem requirements and unit requirements.
+    \item[Design] \textbf{Initially} conceptual design.
+        \textbf{Subsequently} architectural design, logical design of modules, physical product design and the final design.
+    \item[Construct or Build] \textbf{Initially} develop proof of concept model.
+        \textbf{Subsequently} new release.
+    \item[Evaluation and Risk Analysis] \textbf{Initially} Customer evaluation and feedback.
+        \textbf{Subsequently} identify, estimate and monitor the technical feasibility and management risks, IE schedule slippage and cost overrun.
+\end{description}
+
+\subsection{Agile}
+\begin{itemize}
+    \item Requirements never fixed.
+    \item Deliver early and deliver often.
+\end{itemize}
+
+\subsection{Lean}
+\begin{itemize}
+    \item Eliminate waste.
+    \item Decide as late as possible.
+    \item Deliver as fast as possible.
+    \item See the whole.
+    \item Think big, act small, fail fast.
+\end{itemize}
+
+\section{UX Design and RE}
+\begin{description}
+    \item[Useful] Original and fulfil a need.
+    \item[Desirable] Evoke emotion and appreciation.
+    \item[Accessible] Accessible to people with disabilities.
+    \item[Credible] People must trust and believe.
+    \item[Findable] Navigable.
+    \item[Usable] Easy to use.
+\end{description}
+
+\section{Estimation}
+\subsection{By Analogy}
+\begin{enumerate}
+    \item Characterize the proposed product.
+    \item Select the most similar completed products whose characteristics have been stored in the historical database.
+    \item Derive the estimate for the proposed project from the most similar completed projects by analogy.
+\end{enumerate}
+\subsubsection{Advantages}
+\begin{itemize}
+    \item Based on actual project characteristic data.
+    \item The estimator's past experience and knowledge can be used which is not easy to be quantified.
+    \item The differences between the completed and the proposed project can be identified and the impacts estimated.
+\end{itemize}
+\subsubsection{Disadvantages}
+\begin{itemize}
+    \item Restricted to the information that is available at that point.
+    \item Difficult to find the right number of analogies to get an accurate estimation (go for 2).
+\end{itemize}
+Where applicable, this is superior to the algorithmic model in at least some circumstances.
+
+\subsection{Wide-band Delphi (Expert Judgement)}
+\begin{enumerate}
+    \item Get multiple experts / stakeholders.
+    \item Share project information.
+    \item Each participant provides an estimate independently and anonymously.
+    \item All estimates are shared and discussed.
+    \item Repeat until consensus, or exclude extremes and calculate average.
+\end{enumerate}
+\subsubsection{Advantages}
+\begin{itemize}
+    \item People who would do the work are making the estimates, thus ensuring validity.
+    \item Assumptions are documented, discussed and agreed.
+    \item Simple.
+\end{itemize}
+\subsubsection{Disadvantages}
+\begin{itemize}
+    \item Management support is required.
+    \item Management may not like estimation results.
+\end{itemize}
+
+\subsection{Parametric (Algorithmic) Models}
+Based on (examples):
+\begin{itemize}
+    \item Research and historical data.
+    \item Language, design methodology, skill-levels, risk assessments, etc.
+\end{itemize}
+\subsubsection{Advantages}
+\begin{itemize}
+    \item Repeatable estimations.
+    \item Easy to modify input data, refine and customise formulas.
+    \item Efficient and able to support a family of estimations or sensitivity analysis.
+    \item Objectively calibrated to previous experiences.
+\end{itemize}
+\subsubsection{Disadvantages}
+\begin{itemize}
+    \item Unable to deal with exceptional conditions (personnel, teamwork, match between skill-levels and tasks).
+    \item Poor sizing inputs and inaccurate cost driver rating will result in inaccurate estimation.
+    \item Some experience and factors can not be easily quantified.
+\end{itemize}
+\subsubsection{Examples}
+\begin{description}
+    \item[COCOMO] Based on lines of code. Designed to model large, institutional projects. Includes overheads for design, management, etc.
+    \item[Function Point Analysis] Based on the functional requirements of the system - number of inputs, outputs, database tables, etc.
+\end{description}
+
+\section{Testing}
+\begin{description}
+    \item[Validation] Demonstrate that the software meets its requirements.
+    \item[Verification] Discover faults or defects in the software where its behaviour is incorrect or not in conformance with its specification.
+\end{description}
+
+\subsection{Development Testing}
+\begin{description}
+    \item[Unit Testing] Test units (methods or classes).
+    \item[Integration / Component Testing] Test composite components, and component interfaces.
+    \item[System] Test integration of whole system and component interactions.
+\end{description}
+
+\subsection{Release Testing}
+\begin{itemize}
+    \item Black box.
+    \item Functionality, performance, dependability, reliability.
+    \item Form of system testing.
+\end{itemize}
+
+\subsection{User Testing}
+\begin{description}
+    \item[Alpha] Users work with developers to test the software at the developer's site.
+    \item[Beta] Experimental release to some users, problems raised with system developers.
+    \item[Acceptance] Customers test to decide whether the product is ready for deployment.
+\end{description}
+
+\section{Requirements Engineering}
+Acquisition, analysis, validation, documentation and management of requirements.
+
+\subsection{Functional Requirements (use cases)}
+Requirements or capabilities for functions (specific behaviour) that must be performed by the system.
+\begin{itemize}
+    \item Formalises expectations.
+    \item Easy technique to understand.
+    \item User-driven, so encourages user involvement.
+    \item Basis for scoping and prioritizing development work.
+    \item Basis for acceptance testing.
+\end{itemize}
+
+\subsubsection{Use cases need}
+\begin{description}
+    \item[Actor] The 'user' - note that the system \textit{can not} use itself.
+    \item[Name] A verb phrase, from the primary actor's perspective.
+    \item[Description] Summary of the use case.
+    \item[Pre-conditions] That must be met before the use case can happen.
+    \item[Steps] Sequence of user input / stimuli and system responses.
+    \item[Alternative Sequences] Alternative paths of action, based on execution of use case.
+    \item[Post-conditions] That must be met after the use case is complete.
+    \item[A Package] Use case packages gather similar use cases together.
+    \item[A priority] Must have, Should have, Could have, Won't have.
+\end{description}
+
+\subsubsection{Relationships between use cases}
+\begin{description}
+    \item[$<<$Include$>>$ relationship] Factors out common behaviour in use cases.
+    \item[$<<$Extend$>>$ relationship] Factors out optional behaviour in use cases.
+    \item[Generalize relationship] For when certain behaviour is overridden in child classes.
+\end{description}
+
+\begin{tabular}{|p{3.5cm}|p{3.5cm}|}
+\hline
+    \textsc{User Story} & \textsc{Use Case} \\ \hline
+    Statement of user's needs. & Description of a single interaction with the system. \\ \hline
+    Typically agile. & Typically iterative / traditional. \\ \hline
+    User centered. & User centered. \\ \hline
+\end{tabular}
+
+\subsection{Non-functional Requirements Examples}
+Constraints on performance or quality of the system.
+\begin{description}
+    \item[Safety Requirements] The system shall not permit operation unless the operator guard is in place.
+    \item[Security Requirements] Only the system administrator can change system data.
+    \item[Interface Requirements] The system's interaction wit other existing or proposed systems.
+    \item[Human Engineering Requirements] (usability) adequacy, learning, error handling, recovering...
+\end{description}
+
+\subsection{Sources of requirements (stakeholders)}
+\begin{description}
+    \item[Users] customers or end users.
+    \item[Other Stakeholders] marketing experts, regulators, managers, business owners, developers.
+    \item[Non-Human Sources] other devices or systems in the environment.
+\end{description}
+
+\subsection{Requirements Elicitation}
+\begin{description}
+    \item[Interviews] Understanding problem and eliciting general requirements.
+    \item[Workshops] Multiple stakeholders, resolve conflicting requirements, broad info about system usage.
+    \item[Focus Groups] Broad representation, broad-based ideas.
+    \item[Observations] Time consuming, and limited feedback from users.
+    \item[Questionnaires] Inexpensive, easy to deploy. Hard to write.
+    \item[System Interface Analysis] Look at the functionality of another system.
+    \item[User Interface Analysis] Study existing systems, find things to replicate and avoid.
+    \item[Document Analysis] Study documentation of existing systems, or industry standards / legislation.
+\end{description}
+
+\subsection{Classes}
+\begin{itemize}
+    \item High level structure of the system internals.
+    \item Collected into packages.
+    \item Represented in a class diagram, which displays logical / static structure of a system.
+\end{itemize}
+
+\subsubsection{Classes need}
+\begin{description}
+    \item[Name] Unique within its namespace.
+    \item[Attributes] The information / state stored by instances of the class.
+    \item[Operations] The methods / functional responsibilities of the class.
+\end{description}
+
+\subsubsection{Types of classes}
+\begin{description}
+    \item[Boundary Classes] separate interfaces from the system, and communicate with the environment.
+    \item[Entity Classes] functionality dealing with storage and handling of long-lived / persistent information.
+    \item[Control Classes] Control interaction between groups of objects. Only meant to handle one (or a few) use cases.
+\end{description}
+
+\subsubsection{Relationships between classes}
+\begin{description}
+    \item[Association] \textit{straight line} Covers any logical connection or relationship between classes.
+    \item[Directed Association] \textit{arrow} Depicts a container-contained directional flow.
+    \item[Reflexive Association] \textit{line from self to self} Relationships such as management of employees.
+    \item[Multiplicity] \textit{line with numerical annotations} Depicts cardinality of one class in relation to another.
+    \item[Aggregation] \textit{line with numerical annotations and diamond near parent} When the primary purpose of the parent is to contain the children.
+    \item[Composition] \textit{line with shaded diamond near parent} Like aggregation, except the life cycle of the child relies is linked to the life cycle of the parent.
+    \item[Inheritance] \textit{hollow arrow} Indicates that the child class is a specific type of the parent class.
+    \item[Realization] \textit{hollow, dashed arrow}
+\end{description}
+
+\subsection{State Machines}
+Two different levels:
+\begin{description}
+    \item[Protocol] legal usage scenarios.
+    \item[Behavioural] individual entities.
+\end{description}
+
+State can either be:
+\begin{description}
+    \item[Qualitative] indicates current status of an object during its lifespan.
+    \item[Quantitative] current values of all an object's attributes.
+\end{description}
+
+\section{Safety Critical Systems}
+\begin{itemize}
+    \item Reduce risk \textsc{so far as is reasonably practical}.
+    \item Identify all possible risk reduction measures, and make determination of practicability.
+    \item Make everything as simple as possible, but no simpler.
+    \item Aim for quality during development, through the application of an established and recognised software process.
+\end{itemize}
+
+\subsubsection{Causes of faults}
+\begin{description}
+    \item[Coding Defects] implementation bugs. Memory errors, side effects, loss of precision, unchecked errors, etc.
+    \item[Algorithmic Flaws] design logic. Wrong value calculated, incorrect value stored, unintended (de)activation.
+    \item[Task Interference] race conditions, data corruption.
+    \item[Insufficient Fault Protection] memory corruption, CPU overload, missed time-bounds, etc.
+\end{description}
+
+\subsection{Reviews}
+\begin{description}
+    \item[Technical Review] Review for conformance to standards, lead by team leader.
+    \item[Software Inspection] Systemic location and classification of defects. Performed by people with at least as much experience as the software author.
+    \item[Informal Inspection] Structured walk through of the work you've done with other people.
+    \item[Audit] External, independently managed review of work. Done late in the development process.
+\end{description}
+
+\end{multicols}
+\end{document}
