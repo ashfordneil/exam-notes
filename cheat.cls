@@ -35,4 +35,3 @@
 
 % page numbers off
 \pagestyle{empty}
-

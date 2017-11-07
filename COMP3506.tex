@@ -10,17 +10,18 @@
 \Large{\underline{COMP3506 Cheat Sheet}} \\
 \end{center}
 
+
 %% START HERE
 \section{Complexities}
 List of complexities, in sorted order.
-\begin{itemize}
+\begin{description}
     \item[$O(1)$] Constant time.
     \item[$O(\log(n))$] Logarithmic time.
     \item[$O(\log(n)^c)$] Polylogarithmic time.
     \item[$O(n)$] Linear time.
     \item[$O(n^c)$] Polynomial time.
     \item[$O(c^n)$] Exponential time.
-\end{itemize}
+\end{description}
 Definitions of complexities.
 \begin{align*}
     f(n) = O(g(n)) \rightarrow& g(n) \geq f(n) \\
@@ -38,23 +39,50 @@ Definitions of complexities.
 \end{align*}
 
 \section{Sorting Algorithms}
-\begin{itemize}
-    \item[Selection Sort]
-        \textbf{Scan} for the largest element.
-        \textbf{Swap} largest element with last element.
-        \textbf{Sort} elements 0 to $n-1$.
-    \item[Merge Sort]
-        \textbf{Sort} each half of the list.
-        \textbf{Merge} the two sorted halves together.
-    \item[Quick Sort]
-        \textbf{Pick} a random pivot point.
-        \textbf{Partition} the list, ensuring all elements are placed before the pivot iff they are less than it.
-        \textbf{Sort} the list of elements larger than the pivot, and the list of elements smaller than it.
-    \item[Bucket Sort]
-        \textbf{For} $i \in [0..l)$ where $l$ is the number of digits in the largest element.
-        \textbf{Partition} the list elements into buckets, based off the value of their $i$th digit.
-        \textbf{Combine} the buckets into a single list.
-\end{itemize}
+\begin{description}
+    \item[Selection]
+        \textsc{Scan} for the largest element.
+        \textsc{Swap} largest element with last element.
+        \textsc{Sort} elements 0 to $n-1$.
+    \item[Merge]
+        \textsc{Sort} each half of the list.
+        \textsc{Merge} the two sorted halves together.
+    \item[Quick]
+        \textsc{Pick} a random pivot point.
+        \textsc{Partition} the list, ensuring all elements are placed before the pivot iff they are less than it.
+        \textsc{Sort} the list of elements larger than the pivot, and the list of elements smaller than it.
+    \item[Bucket]
+        \textsc{For} $i \in [0..l)$ where $l$ is the number of digits in the largest element.
+        \textsc{Partition} the list elements into buckets, based off the value of their $i$th digit.
+        \textsc{Combine} the buckets into a single list.
+\end{description}
+
+\section{Linear Structures}
+Abstract data types.
+\begin{description}
+    \item[Stack]
+        first in last out,
+        supports \textsc{push}, \textsc{pop}, \textsc{top} and \textsc{size}.
+    \item[Queue]
+        first in first out,
+        supports \textsc{enqueue}, \textsc{dequeue}, \textsc{first} and \textsc{size}.
+    \item[List]
+        sequence of elements,
+        supports \textsc{get}, \textsc{set}, \textsc{add}, \textsc{remove} and \textsc{size}.
+    \item[Positional List]
+        sequence of keys that are associated with elements,
+        supports \textsc{before}, \textsc{after}, \textsc{first}, \textsc{last}, \textsc{size},
+        \textsc{addFirst}, \textsc{addLast}, \textsc{addBefore}, \textsc{addAfter}, \textsc{set} and \textsc{remove}.
+\end{description}
+Concrete data types.
+\begin{description}
+    \item[Linked List]
+        \textbf{O(1)} iteration, and insertion / removal at the current index.
+        \textbf{O(n)} indexing, and insertion / removal at a given index.
+    \item[Array]
+        \textbf{O(1)} iteration, indexing, and inserting / removal at the end of the list.
+        \textbf{O(n)} insertion / removal at a given index.
+\end{description}
 
 \end{multicols}
 \end{document}
