@@ -1,50 +1,10 @@
-\documentclass[10pt, landscape, a4]{article}
-\usepackage{multicol}
-\usepackage{calc}
-\usepackage[landscape]{geometry}
-\usepackage{amsmath,amsthm,amsfonts,amssymb}
-\usepackage{color,graphicx,overpic}
-\usepackage{hyperref}
+\documentclass[landscape]{cheat}
+\usepackage{amsmath}
 \usepackage{listings}
-
-% margins off
-\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm}
-
-% Redefine section commands to use less space
-\makeatletter
-\renewcommand{\section}{\@startsection{section}{1}{0mm}%
-{-1ex plus -.5ex minus -.2ex}%
-{0.5ex plus .2ex}%x
-{\normalfont\large\bfseries}}
-\renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
-{-1explus -.5ex minus -.2ex}%
-{0.5ex plus .2ex}%
-{\normalfont\normalsize\bfseries}}
-\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{0mm}%
-{-1ex plus -.5ex minus -.2ex}%
-{1ex plus .2ex}%
-{\normalfont\small\bfseries}}
-\makeatother
-
-% no section numbers
-\setcounter{secnumdepth}{0}
-
-% indenting off
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{0pt plus 0.5ex}
-
-% page numbers off
-\pagestyle{empty}
 
 \begin{document}
 \footnotesize
 \begin{multicols}{3}
-
-% multicol params
-\setlength{\premulticols}{1pt}
-\setlength{\postmulticols}{1pt}
-\setlength{\multicolsep}{1pt}
-\setlength{\columnsep}{2pt}
 
 \begin{center}
 \Large{\underline{COMP4403 Cheat Sheet}} \\
