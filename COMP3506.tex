@@ -11,9 +11,50 @@
 \end{center}
 
 %% START HERE
-\section{Lorem Ipsum}
-This is where the example text goes.
-I'm not in the mood to google Lorem Ipsum, though, so I'm just gonna write this instead.
+\section{Complexities}
+List of complexities, in sorted order.
+\begin{itemize}
+    \item[$O(1)$] Constant time.
+    \item[$O(\log(n))$] Logarithmic time.
+    \item[$O(\log(n)^c)$] Polylogarithmic time.
+    \item[$O(n)$] Linear time.
+    \item[$O(n^c)$] Polynomial time.
+    \item[$O(c^n)$] Exponential time.
+\end{itemize}
+Definitions of complexities.
+\begin{align*}
+    f(n) = O(g(n)) \rightarrow& g(n) \geq f(n) \\
+    f(n) = \Theta(g(n)) \rightarrow& g(n) = f(n) \\
+    f(n) = \Omega(g(n)) \rightarrow& g(n) \leq f(n)
+\end{align*}
+
+\section{Recurrence Relations}
+\begin{align*}
+    T(n) = T(\frac n 2) + O(1) \rightarrow& T(n) = O(\log n) \\
+    T(n) = T(n - 1) + O(1) \rightarrow& T(n) = O(n) \\
+    T(n) = 2 T(\frac n 2) + O(1) \rightarrow& T(n) = O(n) \\
+    T(n) = T(n - 1) + O(n) \rightarrow& T(n) = O(n^2) \\
+    T(n) = 2 T(\frac n 2) + O(n) \rightarrow& T(n) = O(n \log n)
+\end{align*}
+
+\section{Sorting Algorithms}
+\begin{itemize}
+    \item[Selection Sort]
+        \textbf{Scan} for the largest element.
+        \textbf{Swap} largest element with last element.
+        \textbf{Sort} elements 0 to $n-1$.
+    \item[Merge Sort]
+        \textbf{Sort} each half of the list.
+        \textbf{Merge} the two sorted halves together.
+    \item[Quick Sort]
+        \textbf{Pick} a random pivot point.
+        \textbf{Partition} the list, ensuring all elements are placed before the pivot iff they are less than it.
+        \textbf{Sort} the list of elements larger than the pivot, and the list of elements smaller than it.
+    \item[Bucket Sort]
+        \textbf{For} $i \in [0..l)$ where $l$ is the number of digits in the largest element.
+        \textbf{Partition} the list elements into buckets, based off the value of their $i$th digit.
+        \textbf{Combine} the buckets into a single list.
+\end{itemize}
 
 \end{multicols}
 \end{document}
