@@ -14,7 +14,7 @@
 %% START HERE
 \section{Complexities}
 
-List of complexities, in sorted order.
+\subsection{List of complexities, in sorted order}
 \begin{description}
     \item[$O(1)$] Constant time.
     \item[$O(\log(n))$] Logarithmic time.
@@ -24,14 +24,14 @@ List of complexities, in sorted order.
     \item[$O(c^n)$] Exponential time.
 \end{description}
 
-Definitions of complexities.
+\subsection{Definitions of complexities}
 \begin{align*}
     f(n) = O(g(n)) \rightarrow& g(n) \geq f(n) \\
     f(n) = \Theta(g(n)) \rightarrow& g(n) = f(n) \\
     f(n) = \Omega(g(n)) \rightarrow& g(n) \leq f(n)
 \end{align*}
 
-\section{Recurrence Relations}
+\subsection{Recurrence Relations}
 \begin{align*}
     T(n) = T(\frac n 2) + O(1) \rightarrow& T(n) = O(\log n) \\
     T(n) = T(n - 1) + O(1) \rightarrow& T(n) = O(n) \\
@@ -61,7 +61,7 @@ Definitions of complexities.
 
 \section{Linear Structures}
 
-Abstract data types.
+\subsection{Abstract data types}
 \begin{description}
     \item[Stack]
         first in last out,
@@ -78,7 +78,7 @@ Abstract data types.
         \textsc{addFirst}, \textsc{addLast}, \textsc{addBefore}, \textsc{addAfter}, \textsc{set} and \textsc{remove}.
 \end{description}
 
-Concrete data types.
+\subsection{Concrete data types}
 \begin{description}
     \item[Linked List]
         \textbf{O(1)} iteration, and insertion / removal at the current index.
@@ -87,6 +87,52 @@ Concrete data types.
         \textbf{O(1)} iteration, indexing, and inserting / removal at the end of the list.
         \textbf{O(n)} insertion / removal at a given index.
 \end{description}
+
+\section{Trees}
+
+\subsection{Abstract data types}
+\begin{description}
+    \item[Sorted Set]
+        key store,
+        supports \textsc{largest}, \textsc{smallest}, \textsc{before}, \textsc{after},
+        \textsc{exists}, \textsc{add}, \textsc{remove} and \textsc{size}.
+    \item[Sorted Map]
+        key-value store,
+        supports \textsc{largest}, \textsc{smallest}, \textsc{before}, \textsc{after},
+        \textsc{get}, \textsc{put}, \textsc{remove} and \textsc{size}.
+\end{description}
+
+\subsection{Complexities}
+\begin{description}
+    \item[Largest] $O(\log n)$ average case, $O(n)$ worst case.
+    \item[Smallest] $O(\log n)$ average case, $O(n)$ worst case.
+    \item[Before] $O(\log n)$ average case, $O(n)$ worst case.
+    \item[After] $O(\log n)$ average case, $O(n)$ worst case.
+    \item[Exists / Get] $O(\log n)$ average case, $O(n)$ worst case.
+    \item[Add / Put] $O(\log n)$ average case, $O(n)$ worst case.
+    \item[Remove] $O(\log n)$ average case, $O(n)$ worst case.
+    \item[Size] $O(1)$ worst case.
+\end{description}
+
+\subsection{Balancing}
+The difference between average case and worst case depends on whether the tree is balanced.
+Different algorithms exist to balance trees, based on different invariants.
+
+\begin{description}
+    \item[Red-Black]
+        Also called 2-3 trees.
+        All nodes are coloured either red or black.
+        \textsc{Root} is black.
+        \textsc{Leafs} (nil) are black.
+        \textsc{Red} nodes have two black children.
+        \textsc{All} paths from the root to a leaf have the same number of black nodes.
+    \item[AVL] TODO
+    \item[B+]
+        All keys are stored at the same depth, in leaf nodes.
+        All nodes except the root are guaranteed to have between $0.4B$ and $B$ elements in them.
+        To maintain this invariant, nodes can be split in two, or combined.
+\end{description}
+
 
 \end{multicols}
 \end{document}
