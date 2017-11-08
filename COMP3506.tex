@@ -120,19 +120,46 @@ Different algorithms exist to balance trees, based on different invariants.
 
 \begin{description}
     \item[Red-Black]
-        Also called 2-3 trees.
         All nodes are coloured either red or black.
         \textsc{Root} is black.
         \textsc{Leafs} (nil) are black.
         \textsc{Red} nodes have two black children.
         \textsc{All} paths from the root to a leaf have the same number of black nodes.
-    \item[AVL] TODO
-    \item[B+]
+    \item[AVL]
+        At each node, the height of the left and right subtrees must differ by no more than one.
+        If an insertion or deletion breaks this invariant at a node, balancing the first node with a broken invariant will balance the tree.
+    \item[B]
         All keys are stored at the same depth, in leaf nodes.
         All nodes except the root are guaranteed to have between $0.4B$ and $B$ elements in them.
         To maintain this invariant, nodes can be split in two, or combined.
+    \item[$(a,b)$]
+        Like $B$ trees, except instead of $0.4B$ and $B$ its $a$ and $b$.
+        Height is $\Omega(\log_b n)$ and $O(\log_a n)$.
+        Must maintain $2 \leq a \leq \frac {b+1} 2$.
+    \item[Splay]
+        Keeps the most frequently used nodes close to the root of the tree.
+        \textsc{Insert} operations move the new node to the root of the tree.
+        \textsc{Successful} searches move the found node to the root of the tree.
+        \textsc{Unsuccessful} searches move the last node involved in the search to the root of the tree.
+        \textsc{Removals} move the parent of the removed item to the root of the tree.
 \end{description}
 
+\section{Heaps}
+Also called a priority queue.
+Stores a set of elements that are going to be accessed in sorted order.
+Supports the following operations.
+
+\begin{description}
+    \item[Min] $\Theta(1)$.
+    \item[RemoveMin] $\Theta(\log n)$.
+    \item[Insert] $O(\log n)$ for binary heap, otherwise $\Theta(1)$.
+    \item[Merge] $\Theta(n)$ for binary heap, $O(\log n)$ for binomial heap of $\Theta(1)$ for Fibonacci heap.
+\end{description}
+
+\subsection{Binary Heap}
+A binary heap is a binary tree that satisfies the \textsc{heap order} property.
+For every internal node $v$ except the root, $key(v) \geq key(parent(v))$.
+A binary heap tree can have no gaps.
 
 \end{multicols}
 \end{document}
