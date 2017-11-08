@@ -163,5 +163,50 @@ A binary heap is a binary tree that satisfies the \textsc{heap order} property.
 For every internal node $v$ except the root, $key(v) \geq key(parent(v))$.
 A binary heap tree can have no gaps.
 
+\section{Hash Tables}
+
+\subsection{Abstract Data Types}
+\begin{description}
+    \item[Unsorted Set] key store,
+        supports \textsc{exists}, \textsc{add}, \textsc{remove} and \textsc{size}.
+    \item[Unsorted Map] key-value store,
+        supports \textsc{get}, \textsc{put}, \textsc{remove} and \textsc{size}.
+\end{description}
+
+\subsection{Complexities}
+\begin{description}
+    \item[Exists / Get] $O(1)$ expected case, $O(n)$ worst case.
+    \item[Add / Put] $O(1)$ expected case, $O(n)$ worst case.
+    \item[Remove] $O(1)$ expected case, $O(n)$ worst case.
+    \item[Size] $O(1)$ worst case.
+\end{description}
+
+\subsection{Collisions}
+The difference between expected case and worst case depends on how many collisions the hashmap has, and how they are handled.
+Different algorithms exist to handle the cases where hashes collide.
+The best way to limit the effect of collisions in a hash table is to keep the load factor low.
+\begin{description}
+    \item[Chaining] Replace the buckets with linked lists of all keys which have the same compressed hash.
+    \item[Linear Probing] Replace $h(k)$ with $h(k, i) = h(k) + i$ for $i \in (0,N]$ where $N$ is the size of the hashmap.
+    \item[Quadtratic Probing] Replace $h(k)$ with $h(k, i) = h(k) + ai + bi^2$ for $i \in (0,N]$ where $N$ is the size of the hashmap.
+    \item[Double Hashing] Replace $h(k)$ with $h(k, i) = h_1(k) + ih_2(k)$ for $i \in (0,N]$ where $N$ is the size of the hashmap.
+\end{description}
+
+\subsection{Hash Functions}
+Used to map keys to buckets within the hashmap.
+\begin{description}
+    \item[Compression] Turns the output of a hash function into a bucket index.
+        $b(k) = h(k) \mod N$
+    \item[MAD] Multiply, Add and Divide.
+        Pick a \textsc{prime} $p$ such that $p \geq N, p \geq k$.
+        Pick \textsc{random} numbers $\alpha, \beta$ from $(1, p]$.
+        $h(k) = 1 + (((\alpha k + \beta) \mod p) \mod N)$
+    \item[Polynomial Accumulation] \textsc{Partition} the bits of the key into a sequence of components of fixed length $a$.
+        \textsc{Pick} a fixed value $z$.
+        \textsc{Evaluate} the polynomial $p(z) = a_0 + a_1z + a_2z^2 + a_3z^3+...$, ignoring overflows.
+        $h(k) = p(z)$
+
+\end{description}
+
 \end{multicols}
 \end{document}
