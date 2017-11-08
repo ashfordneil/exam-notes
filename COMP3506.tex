@@ -36,7 +36,7 @@
     T(n) =& a T(\frac n b) + f(n) \\
     f(n) = O(n^{\log_b a}) \rightarrow& T(n) \in \Theta(n^{\log_b a}) \\
     f(n) \in \Theta(n^{\log_b a} \log^k n) \rightarrow& T(n) \in \Theta(n^{\log_b a} \log^{k+1} n) \\
-    \frac {f(n) = \Omega(n^{\log_b a})} {af(\frac n b) \leq cf(n), c < 1} \rightarrow& T(n) \in \Theta(f(n)) \\
+    \frac {f(n) = \Omega(n^{\log_b a})} {af(\frac n b) \leq f(n)} \rightarrow& T(n) \in \Theta(f(n)) \\
 \end{align*}
 
 \section{Sorting Algorithms}
