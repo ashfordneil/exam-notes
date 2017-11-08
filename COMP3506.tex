@@ -33,11 +33,10 @@
 
 \subsection{Recurrence Relations}
 \begin{align*}
-    T(n) = T(\frac n 2) + O(1) \rightarrow& T(n) = O(\log n) \\
-    T(n) = T(n - 1) + O(1) \rightarrow& T(n) = O(n) \\
-    T(n) = 2 T(\frac n 2) + O(1) \rightarrow& T(n) = O(n) \\
-    T(n) = T(n - 1) + O(n) \rightarrow& T(n) = O(n^2) \\
-    T(n) = 2 T(\frac n 2) + O(n) \rightarrow& T(n) = O(n \log n)
+    T(n) =& a T(\frac n b) + f(n) \\
+    f(n) = O(n^{\log_b a}) \rightarrow& T(n) \in \Theta(n^{\log_b a}) \\
+    f(n) \in \Theta(n^{\log_b a} \log^k n) \rightarrow& T(n) \in \Theta(n^{\log_b a} \log^{k+1} n) \\
+    \frac {f(n) = \Omega(n^{\log_b a})} {af(\frac n b) \leq cf(n), c < 1} \rightarrow& T(n) \in \Theta(f(n)) \\
 \end{align*}
 
 \section{Sorting Algorithms}
@@ -57,6 +56,9 @@
         \textsc{For} $i \in [0..l)$ where $l$ is the number of digits in the largest element.
         \textsc{Partition} the list elements into buckets, based off the value of their $i$th digit.
         \textsc{Combine} the buckets into a single list.
+    \item[Heap]
+        \textsc{Insert} all elements of the list into a priority queue.
+        \textsc{Remove} all elements of the list from the priority queue, now in order.
 \end{description}
 
 \section{Linear Structures}
