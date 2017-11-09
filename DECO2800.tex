@@ -31,5 +31,50 @@
     \item Can relate well to the visitor pattern.
 \end{itemize}
 
+\subsection{Visitor}
+\begin{itemize}
+    \item Separates the representation of an object structure from the representation of an operation to be performed on that structure.
+    \item Allows for more code reuse, and simpler logic.
+    \item Works well with the composite pattern.
+\end{itemize}
+
+\subsection{Mediator}
+\begin{itemize}
+    \item Creates a manager object that encapsulates the way that multiple child objects interact.
+    \item Each child only needs to worry about its own state, and provides a simple interface that does not depend on other types.
+    \item Manager object does not need to worry about internal workings of the child objects, and only cares about the interactions between them.
+\end{itemize}
+
+\subsection{Builder}
+\begin{itemize}
+    \item Separate the construction of an object from its running.
+    \item Avoids excessive overloaded constructors.
+\end{itemize}
+
+\subsection{Proxy}
+\begin{itemize}
+    \item One class internally stores another, and provides a similar outward facing interface.
+    \item This outer class is able to intercept messages as they go to the inner class, and verify them or take actions based on them.
+\end{itemize}
+
+\subsection{State}
+\begin{itemize}
+    \item An object's state is partitioned into a set of discrete states.
+    \item The object can only be in one of these states at any time, and operations can move it from one state to another.
+\end{itemize}
+
+\subsection{Ghost}
+\begin{itemize}
+    \item A lazily loaded object that contains only enough information to bootstrap its initialisation when it is actually needed.
+    \item Used for expensive resources that may not need to be initially loaded.
+\end{itemize}
+
+\subsection{MVC}
+\begin{itemize}
+    \item \textsc{Model} stores the data associated with the object, or the state.
+    \item \textsc{View} holds a reference to the model, and renders it to an output.
+    \item \textsc{Controller} receives feedback from the view, and updates the model as appropriate.
+\end{itemize}
+
 \end{multicols*}
 \end{document}
