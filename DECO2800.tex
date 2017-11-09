@@ -76,5 +76,22 @@
     \item \textsc{Controller} receives feedback from the view, and updates the model as appropriate.
 \end{itemize}
 
+\section{Databases}
+
+\begin{description}
+    \item[JPA] Java Persistence Adaptor.
+        This is an ORM, and allows you to access the data without writing SQL.
+        Allows higher level abstractions and easier code.
+    \item[JDBC] Java Data Base Connector.
+        This is a low level sql-based API for connecting to databases.
+        Allows more control and performance.
+    \item[JDO] Java Data Objects.
+        Focusses on modelling objects, and making them persistence.
+        Same usage regardless of internal database technology, even supports NoSQL.
+    \item[JDBI] Java Data Base Interfcae.
+        Convenience library for creating SQL queries.
+        Provides a balance between writing raw SQL and using an ORM.
+\end{description}
+
 \end{multicols*}
 \end{document}
