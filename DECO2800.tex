@@ -1,0 +1,35 @@
+\documentclass[landscape]{cheat}
+
+\begin{document}
+\footnotesize
+\begin{multicols*}{3}
+
+\begin{center}
+\Large{\underline{DECO2800 Cheat Sheet}} \\
+\end{center}
+
+\section{Design Patterns}
+
+\subsection{Singleton}
+\begin{itemize}
+    \item Static (global) reference to \texttt{self}.
+    \item Static getter method that either returns the reference or instantiates it.
+    \item Example uses include connection handles to servers, registries, managers.
+\end{itemize}
+
+\subsection{Observer}
+\begin{itemize}
+    \item One-to-many dependencies so that when the \textsc{one} changes, the \textsc{many} get notified.
+    \item Used in things like GUIs and notification systems.
+    \item Can lead to loose coupling between subject and observer.
+\end{itemize}
+
+\subsection{Composite}
+\begin{itemize}
+    \item Compose objects with recursive / tree-like hierarchies.
+    \item Used in things like menu bars, graphics or abstract syntax trees.
+    \item Can relate well to the visitor pattern.
+\end{itemize}
+
+\end{multicols*}
+\end{document}
