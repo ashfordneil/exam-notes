@@ -93,5 +93,42 @@
         Provides a balance between writing raw SQL and using an ORM.
 \end{description}
 
+\section{Class Diagrams}
+
+\begin{tabular}{|p{0.3\textwidth}|}
+\hline
+    $<<$interface / abstract$>>$ \\
+    ClassName \\
+\hline
+\begin{itemize}
+    \item[-] privateAttribute: type
+    \item[+] publicAttribute: type
+    \item[\#] protectedAttribute: type
+\end{itemize} \\ \hline
+\begin{itemize}
+    \item[+] publicFunction(param: type): type
+    \item[+] publicFunction(param: type): type
+\end{itemize} \\ \hline
+\end{tabular}
+
+\subsection{Relations Between Classes}
+At each end of arrows are the number of each class involved. Either 0, 1 or *.
+\begin{description}
+    \item[Association]
+        Simple arrow.
+    \item[Aggregation]
+        Simple arrow, with a hollow diamond at the tail.
+        Stores a \textsc{has a} relationship.
+    \item[Composition]
+        Simple arrow, with a filled diamond at the tail.
+        Stores a \textsc{has a} relationship, with \textsc{coincident life spans}.
+    \item[Inheritance]
+        Hollow head arrow.
+        Stores the \textsc{inherits} relationship between a class and its superclass.
+    \item[Subtyping]
+        Hollow head, dotted arrow.
+        Stores the \textsc{implements} relationship between a class and an interface.
+\end{description}
+
 \end{multicols*}
 \end{document}
