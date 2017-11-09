@@ -146,6 +146,14 @@ Different algorithms exist to balance trees, based on different invariants.
         \textsc{Removals} move the parent of the removed item to the root of the tree.
 \end{description}
 
+\subsection{Traversals}
+\begin{description}
+    \item[Pre-order] Visit \textsc{root}, \textsc{left}, \textsc{right}.
+    \item[Post-order] Visit \textsc{left}, \textsc{right}, \textsc{root}.
+    \item[In-order] Visit \textsc{left}, \textsc{root}, \textsc{right}.
+    \item[Level-order] Breadth first search. Use a queue to store nodes and figure out when to visit nodes.
+\end{description}
+
 \section{Heaps}
 Also called a priority queue.
 Stores a set of elements that are going to be accessed in sorted order.
