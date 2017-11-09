@@ -221,5 +221,21 @@ Used to map keys to buckets within the hashmap.
 
 \end{description}
 
+\section{String Searching}
+Given a pattern of length $p$ and a string of length $s$, find the pattern within the string.
+\begin{description}
+    \item[Brute Force]
+        $O(ps)$
+    \item[Boyer Moore]
+        $O(ps)$
+        \textsc{Compare} pattern from the end backwards. 
+        \textsc{Jump} forward until $P[j]=S[i]$ where $i$ is the location in the string that the comparison failed.
+    \item[KMP]
+        $O(p + s)$
+        \textsc{Create} a failure table $F$.
+        \textsc{Compare} pattern from the end forwards.
+        \textsc{Jump} forward until $j=F[P[i]]$ where $i$ is the location in the string that the comparison failed.
+\end{description}
+
 \end{multicols}
 \end{document}
