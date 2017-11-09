@@ -237,5 +237,40 @@ Given a pattern of length $p$ and a string of length $s$, find the pattern withi
         \textsc{Jump} forward until $j=F[P[i]]$ where $i$ is the location in the string that the comparison failed.
 \end{description}
 
+\section{Graphs}
+
+\subsection{Storage}
+\begin{description}
+    \item[Adjacency Matrix]
+        \textbf{O($1$)} finding if two nodes have an edge between them, and adding / removing edges.
+        \textbf{O($n$)} finding the edges attached to a node.
+        \textbf{O($n^2$)} adding / removing nodes.
+    \item[Adjacency List]
+        \textbf{O($1$)} adding / removing edges or nodes.
+        \textbf{O($e$)} finding the edges attached to a node, and finding if two nodes have an edge between them.
+\end{description}
+
+\subsection{Descriptions}
+\begin{description}
+    \item[Path] sequence of alternating vertices and edges that begins and ends with a vertex.
+    \item[Simple Path] path where all vertices and edges are distinct.
+    \item[Cycle] path that starts and ends on the same vertex.
+    \item[Simple Cycle] all edges distinct, all vertices except the start (and end) distinct.
+    \item[Euler Cycle] cycle that visits every edge once.
+    \item[Hamiltonian Cycle] cycle that visits every node once.
+\end{description}
+
+\subsection{Searches / Traversals}
+\begin{description}
+    \item[Depth first]
+        Uses a stack.
+        Detects if directed / undirected graph is cyclic.
+        Find strongly connected components.
+    \item[Breadth first]
+        Uses a queue.
+        Find shortest path tree for uniform weight.
+        Detects if undirected graph is cyclic.
+\end{description}
+
 \end{multicols}
 \end{document}
