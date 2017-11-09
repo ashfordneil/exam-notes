@@ -1,6 +1,6 @@
 \documentclass[landscape]{cheat}
 \usepackage{amsmath}
-\usepackage{listing}
+\usepackage{listings}
 
 \begin{document}
 \footnotesize
@@ -271,6 +271,25 @@ Given a pattern of length $p$ and a string of length $s$, find the pattern withi
         Find shortest path tree for uniform weight.
         Detects if undirected graph is cyclic.
 \end{description}
+
+\section{Pseudocode}
+Creating the failure table for KMP algorithm.
+\begin{lstlisting}
+Algorithm failureFunction(P)
+    F[0] = 0
+    i = 1
+    j = 0
+    while i < m
+        if P[i] = P[j] then
+            F[i] = j + 1
+            i++
+            j++
+        else if j > 0 then
+            j = F[j - 1]
+        else
+            F[i] = 0
+            i++
+\end{lstlisting}
 
 \end{multicols}
 \end{document}
