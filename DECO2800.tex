@@ -130,5 +130,21 @@ At each end of arrows are the number of each class involved. Either 0, 1 or *.
         Stores the \textsc{implements} relationship between a class and an interface.
 \end{description}
 
+\section{Sequence Diagrams}
+\begin{itemize}
+    \item Time flows \textsc{down} the page.
+    \item Entities / objects are represented as \textsc{columns} along the page, with \textsc{labels} at the top.
+    \item During a period of activity for an entity / object, it has a \textsc{box} in its column, otherwise it has a \textsc{dotted line} down the center.
+    \item One entity sending a message to another is represented with a \textsc{solid arrow} between the two of them.
+        This arrow is annotated with the message above it.
+    \item A reply to a message is represented with a \textsc{dotted arrow} between the two of them.
+        This arrow is annotated with the message above it.
+    \item Alternative sequences are represented by drawing \textsc{boxes} around the branched section.
+        The individual alternatives of the branch are separated by \textsc{dotted lines}.
+        The condition of each branch is \textsc{written at the top} of its box, surrounded by $[]$.
+        The top-left corner of the branched section has the word \textsc{alt} written in it.
+
+\end{itemize}
+
 \end{multicols*}
 \end{document}
