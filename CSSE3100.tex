@@ -1,5 +1,6 @@
 \documentclass[landscape]{cheat}
 \usepackage{amsmath}
+\usepackage{amssymb}
 \usepackage{listings}
 
 \begin{document}
@@ -12,6 +13,42 @@
 
 %% START HERE
 \section{Predicate Logic}
+
+\subsection{Things to remember}
+\begin{itemize}
+    \item Array indexes must be within the bounds of an array;
+    \item $\forall$ statements need to specify the set of values; and
+    \item Check edge cases of your functions.
+\end{itemize}
+
+\subsection{Example Function}
+Specify a function $all\_elems(a, i, j, v)$ which is true when all elements of array $a$ from position $i$ up to (but not including) position $j$ have the value $v$.
+\begin{multline*}
+all\_elems(a, i, j, v) =
+    0 \leq i
+    \land i \leq j
+    \land j \leq a.len \\
+    \land (\forall k : \mathbb{N} \cdot
+        i \leq k
+        \land k < k
+        \Rightarrow a[k] = v
+    )
+\end{multline*}
+
+\subsection{Example Specification}
+Specify a program which solves the Dutch National Flag problem.
+This problem requires sorting an array of red, white and blue elements so that the red elements come first, then the white elements and then the blue.
+\begin{multline*}
+\texttt{requires } a = a0 \land only\_elems(a, red, white, blue) \\
+\end{multline*}
+
+\begin{multline*}
+\texttt{ensures } permutation(a, a0) \land \\
+    \exists w, b : \mathbb{Z} \cdot 0 \leq w \land w \leq b \land b \leq a.len \\
+    \land all\_elems(a, 0, w, red) \\
+    \land all\_elems(a, w, b, white) \\
+    \land all\_elems(a, b, a.len, blue)
+\end{multline*}
 
 \section{Hoare Logic}
 
