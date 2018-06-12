@@ -16,9 +16,9 @@
 
 \subsection{Things to remember}
 \begin{itemize}
-    \item Array indexes must be within the bounds of an array;
-    \item $\forall$ statements need to specify the set of values; and
-    \item Check edge cases of your functions.
+    \item Array indexes must be within the bounds of an array
+    \item $\forall$ statements need to specify the set of values
+    \item Check edge cases of your functions
 \end{itemize}
 
 \subsection{Example Function}
@@ -51,6 +51,34 @@ This problem requires sorting an array of red, white and blue elements so that t
 \end{multline*}
 
 \section{Hoare Logic}
+
+\subsection{Loop Invariants $I$}
+\begin{itemize}
+    \item Used for partial correctness and total correctness
+    \item True at the start of the loop: $P \Rightarrow U(I)$
+    \item Maintained during the loop: $\{I \land b\}[]S_1\{I\}$
+    \item At the end of the loop, must be equivalent to postcondition: $\{I \land \lnot b \}[]S\{Q\}$
+\end{itemize}
+Strategies:
+\begin{itemize}
+    \item Replace constant with variable that approaches constant in postcondition 
+    \item Factor out $\lnot b$ from postcondition
+    \item Place bounds on the range of all values that change during the loop
+\end{itemize}
+
+\subsection{Loop Variants $v$}
+\begin{itemize}
+    \item Used for total correctness
+    \item Non-negative at the start of the loop: $P \Rightarrow U(v \geq 0)$
+    \item Always non-negative: $0 \leq v$
+    \item Always decreasing $v < v_0$
+\end{itemize}
+Strategies:
+\begin{enumerate}
+    \item Find variables that change during your loop, and adjust signs to make them decrease
+    \item Combine decreasing variables in a way that the net sum is always decreasing
+    \item Add a constant so that $v = 0 \Rightarrow b$
+\end{enumerate}
 
 \section{JML}
 
