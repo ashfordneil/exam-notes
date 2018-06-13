@@ -86,10 +86,12 @@ Strategies:
     \item Everything is non-nullable by default
     \item Invariants are implicitly in the pre- and post-conditions of all methods that don't specify \texttt{/*@ helper @*/}
     \item Mark pure things as \texttt{/*@ pure @*/} where appropriate
+    \item Array ranges \texttt{a[i..j]} are inclusive
+    \item Add \texttt{/*@ spec\_public @*/} where appropriate
 \end{itemize}
 
 \subsection{Example Snippets}
-Array that contain null
+Array that can contain null
 \begin{lstlisting}
     public /*@ nullable @*/ Object[] h;
     /*@ invariant h != null; @*/
@@ -111,6 +113,27 @@ Function that can throw exception
       @ assignable \nothing;
       @*/
     public void add(Object o) { ... }
+\end{lstlisting}
+
+Array that must be of a specific type
+\begin{lstlisting}
+    A[] arr = new A[10];
+    //@ invariant \typeof(arr) == \type(A[]);
+\end{lstlisting}
+
+Recursive function that is guaranteed to terminate
+\begin{lstlisting}
+    /*@ requires 0 <= x && 0 <= y;
+      @ ensures \result = x * y;
+      @ measured_by x;
+      @*/
+    public int mult(int x, int y) {
+        if (x == 0) {
+            return 0;
+        } else {
+            return y + mult(x - 1, y);
+        }
+    }
 \end{lstlisting}
 
 \section{Weakest Preconditions}
