@@ -39,10 +39,12 @@ all\_elems(a, i, j, v) =
 Specify a program which solves the Dutch National Flag problem.
 This problem requires sorting an array of red, white and blue elements so that the red elements come first, then the white elements and then the blue.
 \begin{gather}
+\nonumber
 \begin{split}
 \texttt{requires } a = a0 \land only\_elems(a, red, white, blue) \\
 \end{split}
 \\
+\nonumber
 \begin{split}
 \texttt{ensures } permutation(a, a0) \land \\
     \exists w, b : \mathbb{Z} \cdot 0 \leq w \land w \leq b \land b \leq a.len \\
@@ -63,7 +65,7 @@ This problem requires sorting an array of red, white and blue elements so that t
 \end{itemize}
 Strategies:
 \begin{itemize}
-    \item Replace constant with variable that approaches constant in postcondition 
+    \item Replace constant with variable that approaches constant in postcondition and set $\lnot b = (x = N)$
     \item Factor out $\lnot b$ from postcondition
     \item Place bounds on the range of all values that change during the loop
 \end{itemize}
@@ -81,6 +83,12 @@ Strategies:
     \item Combine decreasing variables in a way that the net sum is always decreasing
     \item Add a constant so that $v = 0 \Rightarrow b$
 \end{enumerate}
+
+\subsection{Example of How to Argue With Words}
+\begin{equation*}
+    \vdash a \leq y \land z = x * a \land \lnot (a \neq y) \Rightarrow z = x * y
+\end{equation*}
+Since $\lnot (a \neq y)$ is equivalent to $a = y$, together with $z = x * a$ it implies $z = x * y$.
 
 \section{JML}
 \subsection{Things to Remember}
@@ -159,56 +167,105 @@ if (y % 2 = 0) {
 $\{y > 10\}$
 
 \begin{gather}
+\nonumber
 \begin{split}
     wp(\texttt{program}, \texttt{postcondition})
 \end{split}
 \\
+\nonumber
 \begin{split}
     = wp(\texttt{y = x + 1;} \\
         &\texttt{if (y \% 2 = 0) \{ y = 100; \}} \\
         &\texttt{else \{ y = y + 2; \}}, y > 10) \\
 \end{split}
 \\
+\nonumber
 \begin{split}
     = wp(\texttt{y = x + 1}, wp( \\
         &\texttt{if (y \% 2 = 0) \{ y = 100; \}} \\
         &\texttt{else \{ y = y + 2; \}}, y > 10)) \\
 \end{split}
 \\
+\nonumber
 \begin{split}
     = wp(\texttt{y = x + 1}, \\
         &y \% 2 = 0 \Rightarrow wp(\texttt{y = 100}, y > 10) \land \\
         &\lnot(y \% 2 = 0) \Rightarrow wp(\texttt{y = y + 2}, y > 10) \\
 \end{split}
 \\
+\nonumber
 \begin{split}
     = wp(\texttt{y = x + 1}, \\
         &y \% 2 = 0 \Rightarrow 100 > 10 \land \\
         &y \% 2 \neq 0 \Rightarrow y + 2 > 10) \\
 \end{split}
 \\
+\nonumber
 \begin{split}
     = wp(\texttt{y = x + 1}, y \% 2 \neq 0 \Rightarrow y > 8) \\
 \end{split}
 \\
+\nonumber
 \begin{split}
     = (x + 1) \% 2 \neq 0 \Rightarrow x + 1 > 8
 \end{split}
 \\
+\nonumber
 \begin{split}
     x > 8 \Rightarrow ((x + 1) \% 2 \neq 0 \Rightarrow x + 1 > 8)
 \end{split}
 \\
+\nonumber
 \begin{split}
     \therefore \texttt{precondition} \Rightarrow wp(\texttt{program}, \texttt{postcondition}) \\
-\end{split}
-\\
+\end{split} \\
+\nonumber
 \begin{split}
     \therefore \texttt{program is correct} \\
 \end{split}
 \end{gather}
 
 \section{Refinement}
+
+\subsection{Things to Remember}
+\begin{itemize}
+    \item Add your proof obligations
+    \item Think about the end program and work towards it
+\end{itemize}
+\subsection{How to do a Loop}
+\begin{enumerate}
+    \item $z: [P, Q]$
+    \item Strengthen postcondition $I \land \lnot b \Rightarrow Q$
+    \item $\sqsubseteq z, i: [P, I \land \lnot b]$
+    \item Composition, choose $I$ as a middle predicate
+    \item $\sqsubseteq z, i: [P, I]; z, i: [I, I \land \lnot b]$
+    \item Choose a loop variant $V$
+    \item $\sqsubseteq z, i: [P, I]; \texttt{while (b) \{} z, i: [I \land b, I \land 0 \leq V < V_0]\texttt{\}}$
+\end{enumerate}
+
+\subsection{Example of Refinement}
+\nonumber
+\begin{gather}
+\nonumber
+    \begin{split}
+        x, y: [true, x = z^2 \land y = z^4]
+    \end{split} \\
+\nonumber
+    \begin{split}
+        \sqsubseteq \texttt{composition (choose } x = z^2\texttt{)} \\
+        x, y: [true, x = z^2]; x, y: [x = z^2, x = z^2 \land y = z^4] \\
+    \end{split} \\
+\nonumber
+    \begin{split}
+        \sqsubseteq \texttt{assignment (}true \Rightarrow (x = z^2)[x \diagdown z * z]\texttt{)} \\
+        x = z * z; x, y: [x = z^2, x = z^2 \land y = z^4] \\
+    \end{split} \\
+\nonumber
+    \begin{split}
+        \sqsubseteq \texttt{assignment (}x = z * z \Rightarrow (y = z^4)[y \diagdown x * x]\texttt{)} \\
+        x = z * z; y = x * x;
+    \end{split} \\
+\end{gather}
 
 \end{multicols*}
 \end{document}
