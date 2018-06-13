@@ -38,17 +38,19 @@ all\_elems(a, i, j, v) =
 \subsection{Example Specification}
 Specify a program which solves the Dutch National Flag problem.
 This problem requires sorting an array of red, white and blue elements so that the red elements come first, then the white elements and then the blue.
-\begin{multline*}
+\begin{gather}
+\begin{split}
 \texttt{requires } a = a0 \land only\_elems(a, red, white, blue) \\
-\end{multline*}
-
-\begin{multline*}
+\end{split}
+\\
+\begin{split}
 \texttt{ensures } permutation(a, a0) \land \\
     \exists w, b : \mathbb{Z} \cdot 0 \leq w \land w \leq b \land b \leq a.len \\
     \land all\_elems(a, 0, w, red) \\
     \land all\_elems(a, w, b, white) \\
     \land all\_elems(a, b, a.len, blue)
-\end{multline*}
+\end{split}
+\end{gather}
 
 \section{Hoare Logic}
 
@@ -137,6 +139,74 @@ Recursive function that is guaranteed to terminate
 \end{lstlisting}
 
 \section{Weakest Preconditions}
+
+\subsection{Things to Remember}
+\begin{itemize}
+    \item If you see an \texttt{if} without an \texttt{else}, add \texttt{else \{ skip \}}
+    \item Approach problems from the right, and work backwards
+\end{itemize}
+
+\subsection{Example Proof}
+$\{ x > 8 \}$
+\begin{lstlisting}
+y = x + 1;
+if (y % 2 = 0) {
+    y = 100;
+} else {
+    y = y + 2;
+}
+\end{lstlisting}
+$\{y > 10\}$
+
+\begin{gather}
+\begin{split}
+    wp(\texttt{program}, \texttt{postcondition})
+\end{split}
+\\
+\begin{split}
+    = wp(\texttt{y = x + 1;} \\
+        &\texttt{if (y \% 2 = 0) \{ y = 100; \}} \\
+        &\texttt{else \{ y = y + 2; \}}, y > 10) \\
+\end{split}
+\\
+\begin{split}
+    = wp(\texttt{y = x + 1}, wp( \\
+        &\texttt{if (y \% 2 = 0) \{ y = 100; \}} \\
+        &\texttt{else \{ y = y + 2; \}}, y > 10)) \\
+\end{split}
+\\
+\begin{split}
+    = wp(\texttt{y = x + 1}, \\
+        &y \% 2 = 0 \Rightarrow wp(\texttt{y = 100}, y > 10) \land \\
+        &\lnot(y \% 2 = 0) \Rightarrow wp(\texttt{y = y + 2}, y > 10) \\
+\end{split}
+\\
+\begin{split}
+    = wp(\texttt{y = x + 1}, \\
+        &y \% 2 = 0 \Rightarrow 100 > 10 \land \\
+        &y \% 2 \neq 0 \Rightarrow y + 2 > 10) \\
+\end{split}
+\\
+\begin{split}
+    = wp(\texttt{y = x + 1}, y \% 2 \neq 0 \Rightarrow y > 8) \\
+\end{split}
+\\
+\begin{split}
+    = (x + 1) \% 2 \neq 0 \Rightarrow x + 1 > 8
+\end{split}
+\\
+\begin{split}
+    x > 8 \Rightarrow ((x + 1) \% 2 \neq 0 \Rightarrow x + 1 > 8)
+\end{split}
+\\
+\begin{split}
+    \therefore \texttt{precondition} \Rightarrow wp(\texttt{program}, \texttt{postcondition}) \\
+\end{split}
+\\
+\begin{split}
+    \therefore \texttt{program is correct} \\
+\end{split}
+\end{gather}
 
 \section{Refinement}
 
