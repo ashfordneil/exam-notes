@@ -1,0 +1,186 @@
+\documentclass[landscape]{cheat}
+\usepackage{amsmath}
+\usepackage{listings}
+
+\begin{document}
+\footnotesize
+\begin{multicols*}{3}
+
+\begin{center}
+\Large{\underline{COMP4500 Cheat Sheet}} \\
+\end{center}
+
+%% START HERE
+\section{Complexities}
+
+\subsection{Definitions of Complexities}
+\begin{align*}
+    f(n) = \Theta(g(n)) \Rightarrow& \forall n > n_0, 0 \leq c_1 \cdot g(n) \leq f(n) \leq c_2 \cdot g(n) \\
+    f(n) = O(g(n)) \Rightarrow& \forall n > n_0, 0 \leq f(n) \leq c \cdot g(n) \\
+    f(n) = \Omega(g(n)) \Rightarrow& \forall n > n_0, 0 \leq c \cdot g(n) \leq f(n) \\
+    f(n) = o(g(n)) \Rightarrow& \lim_{n \rightarrow \infty} \frac {f(n)} {g(n)} = 0 \\
+    f(n) = \omega(g(n)) \Rightarrow& \lim_{n \rightarrow \infty} \frac {g(n)} {f(n)} = 0 \\
+\end{align*}
+
+\subsection{Master Theorem}
+\begin{align*}
+    T(n) = a T\left(\frac n b\right) + f(n) \\
+    f(n) = O(n^{\log_b a}) \Rightarrow& T(n) =\Theta(n^{\log_b a}) \\
+    f(n) = \Theta(n^{\log_b a} \log^k n) \Rightarrow& T(n) = \Theta(n^{\log_b a} \log^{k+1} n) \\
+    \frac {f(n) = \Omega(n^{\log_b a})} {af(\frac n b) \leq f(n)} \Rightarrow& T(n) = \Theta(f(n)) \\
+\end{align*}
+
+\section{Graph Errata}
+\subsection{Handshake Lemma}
+\begin{lstlisting}
+for v in G.V
+    for e in G.Adj(e)
+        OPERATION
+\end{lstlisting}
+\begin{description}
+    \item[Complexity] $\Theta(E \times OPERATION)$ for adjacency list
+    \item[Complexity] $\Theta(E \times OPERATION + V^2)$ for adjacency matrix
+\end{description}
+
+\section{Graph Algorithms}
+
+\subsection{Breadth First Search}
+\begin{lstlisting}
+BFS(G, s)
+    for u in G.V - {s}
+        u.colour = white
+        u.d = infinity
+        u.parent = NIL
+    s.colour = grey
+    s.d = 0
+    s.parent = NIL
+    Q = {}
+    ENQUEUE(Q, s)
+    while Q != {}
+        u = DEQUEUE(Q)
+        for v in G.Adj(u)
+            if v.colour == white
+                v.colour = grey
+                v.d = u.d + 1
+                v.parent = u
+                ENQUEUE(Q, b)
+        u.colour = black
+\end{lstlisting}
+\begin{description}
+    \item[Complexity] $\Theta(V+E)$ for adjacency list
+    \item[Complexity] $\Theta(V^2)$ for adjacency matrix
+    \item[Finds] breadth first tree of graph
+    \item[Finds] shortest path to each node from source, assuming equal weights
+\end{description}
+
+\subsection{Depth First Search}
+\begin{lstlisting}
+DFS(G, s)
+    time = 0
+    for u in G.V - {S}
+        u.colour = white
+        udparent = NIL
+    s.colour = grey
+    s.parent = NIL
+    for u in G.V
+        if u.colour == white
+            DFS-VISIT(G, u)
+
+DFS-VISIT(G, u)
+    time = time + 1
+    u.discovery = time
+    for v in G.Adj(u)
+        if v.colour == white
+            v.colour = grey
+            v.parent = u
+            DFS-VISIT(G, v)
+    u.colour = black
+    time = time + 1
+    u.finish = time
+\end{lstlisting}
+\begin{description}
+    \item[Complexity] $\Theta(V+E)$ for adjacency list
+    \item[Complexity] $\Theta(V^2)$ for adjacency matrix
+    \item[Finds] depth first forests of graph
+    \item[Finds] loops, if you find a grey vertex in DFS-VISIT
+    \item[Finds] a topological sort, if you order by $u.finish$
+\end{description}
+
+\subsection{Strongly Connected Components}
+\begin{lstlisting}
+STRONGLY-CONNECTED-COMPONENTS(G)
+    call DFS(G)
+    compute G^T
+    call DFS(G^T) but consider vertices in
+        decreasing order of u.f
+    return discrete trees of second search
+\end{lstlisting}
+
+\subsection{Kruskal's Minimum Spanning Tree}
+\begin{lstlisting}
+MST-KRUSKAL(G, w)
+    A = {}
+    for u in G.V
+        MAKE-SET(u)
+    SORT(G.E, w)
+    for u,v in G.E
+        if FIND-SET(u) != FIND-SET(v)
+            A = A + {(u, v)}
+            UNION(u, v)
+    return A
+\end{lstlisting}
+\begin{description}
+    \item[Complexity] $\Theta(V+E\log{E})$
+    \item[Finds] Minimum spanning tree - subset of edges such that all vertices are connected and sum of edge weight is minimised
+\end{description}
+
+\subsection{Priority First Search}
+\begin{lstlisting}
+PRIORITY-FIRST-SEARCH(G, s, ...)
+    INIT-SINGLE-SOURCE(G, s)
+    Q = G.V
+    while Q != {}
+        u = EXTRACT-MIN(Q)
+        for v in G.Adj(u)
+            RELAX(u, v, ...)
+\end{lstlisting}
+\begin{description}
+    \item[Complexity] $\Theta(V)\cdot T_{EXTRACT} + \Theta(E)\cdot T_{DECREASE}$
+    \item[Complexity] $O(E\log{V})$ for binary heap
+    \item[Complexity] $O(E+V\log{V})$ for fibonacci heap
+\end{description}
+
+\subsection{Prim's Minimum Spanning Tree}
+Priority first search with $Priority(u, v, w) = w(u, v)$.
+\begin{description}
+    \item[Complexity] Same as priority first search
+    \item[Finds] Minimum spanning tree
+\end{description}
+
+\subsection{Dijkstra'a Algorithm}
+Priority first search with $Priority(u, v, w) = u.key + w(u, v)$.
+\begin{description}
+    \item[Complexity] Same as priority first search
+    \item[Finds] Single source shortest path to any node, assuming no negative edges
+\end{description}
+
+\subsection{Bellman Ford}
+\begin{lstlisting}
+BELLMAN-FORD(G, w, s)
+    INIT-SINGLE-SOURCE(G, s)
+    for i in 1..|G.V|-1
+        for u,v in G.E
+            RELAX(u, v, w)
+    for u,v in G.E
+        if v.d > u.d + w(u,v)
+            return FALSE
+    return TRUE
+\end{lstlisting}
+\begin{description}
+    \item[Complexity] $O(V\cdot E)$
+    \item[Finds] Single source shortest path to any node, assuming no negative cycles
+    \item[Finds] The existence of negative cycles
+\end{description}
+
+\end{multicols*}
+\end{document}
