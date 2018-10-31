@@ -10,17 +10,55 @@
 \Large{\underline{COMP4500 Cheat Sheet}} \\
 \end{center}
 
-%% START HERE
-\section{Complexities}
+\section{Math}
 
-\subsection{Definitions of Complexities}
 \begin{align*}
-    f(n) = \Theta(g(n)) \Leftrightarrow& \forall n > n_0, 0 \leq c_1 \cdot g(n) \leq f(n) \leq c_2 \cdot g(n) \\
-    f(n) = O(g(n)) \Leftrightarrow& \forall n > n_0, 0 \leq f(n) \leq c \cdot g(n) \\
-    f(n) = \Omega(g(n)) \Leftrightarrow& \forall n > n_0, 0 \leq c \cdot g(n) \leq f(n) \\
-    f(n) = o(g(n)) \Leftrightarrow& \lim_{n \rightarrow \infty} \frac {f(n)} {g(n)} = 0 \\
-    f(n) = \omega(g(n)) \Leftrightarrow& \lim_{n \rightarrow \infty} \frac {g(n)} {f(n)} = 0 \\
+    f \in O(g) \Leftrightarrow& \forall n > n_0, 0 \leq f(n) \leq c \cdot g(n) \\
+    f \in \Theta(g) \Leftrightarrow& \forall n > n_0, 0 \leq c_1 \cdot g(n) \leq f(n) \leq c_2 \cdot g(n) \\
+    f \in \Omega(g) \Leftrightarrow& \forall n > n_0, 0 \leq c \cdot g(n) \leq f(n) \\
+    f \in o(g) \Rightarrow& \lim_{n \rightarrow \infty} \frac {f(n)} {g(n)} = 0 \\
+    f \in \omega(g) \Rightarrow& \lim_{n \rightarrow \infty} \frac {g(n)} {f(n)} = 0 \\
+% TODO: asymp: 22 and 23
+    \sum_{k=1}^{n} k =& \frac{n(n + 1)}{2}\\
+    \sum_{k=0}^{n} x^k =& \frac{x^{n+1} - 1}{x - 1} \text{ for } x \neq 1\\
+    \sum_{k=0}^{\infty} x^k =& \frac{1}{1 - x} \text{ for } |x| < 1\\
+    \sum_{k=1}^{n} \frac{1}{k} =& \ln n + O(1) (\rightarrow \gamma ~ 0.577 \ldots)\\
+    \sum_{i=1}^{n} 1^k \approx& \frac{n^{k +1}}{|k + 1|} \text{ if } k \neq -1\\
+    \lim_{n \rightarrow a} \frac{f(n)}{g(n)} =& \lim_{n \rightarrow a} \frac{f'(n)}{g'(n)}\\
+    \sum_{k=1}^{n} (a_k - a_{k - 1}) =& a_n - a_0\\
+    \sum_{k=0}^{n-1} (a_k- a_{k + 1}) =& a_0 - a_n\\
+    \sum_{k=0}^{\infty} x^k =& \frac{1}{1 - x}\\
+    \sum_{k=0}^{\infty} kx^k =& \frac{x}{(1 - x)^2}\\
+    \lg \prod_{k = 1}^{n} a_k =& \sum_{k = 1}^{n} \lg a_k\\
+    b^{\log_b y} =& y\\
+    x^a = b \Leftrightarrow & \log_x b = a\\
+    a^{\log_b n} =& n^{log_b a}\\
+    \log_a b =& \frac{\log_c b}{\log_c a} \text{ for } c > 0\\
+    \log(ab) =& \log a + \log b\\
+    \log(\frac{1}{a}) =& -\log a\\
+    \log(a^b) =& b \log a
+% TODO: math: 16 and 17
 \end{align*}
+
+\section{Recurrences}
+
+
+\begin{align*}
+    T(n) =& aT(\frac{n}{b}) + D(n) + C(n)
+\end{align*}
+
+where $D$ is the time to divide the problem, and $C$ is the time to combine subsolutions.
+
+% TODO: rec: 11
+
+\begin{align*}
+    T(n) =& 2T(\lfloor \sqrt{n} \rfloor) + \lg n\\
+    T(2^m) =& 2T(2^{m/2}) + m \text{ where } m = \lg m\\
+    S(2m) =& 2S(m / 2) + m \text{ where } S(m) = T(2^m)\\
+    T(n) =& T(2^m) = S(m) = \Theta(m \lg m)\\
+        =& \Theta(\lg n \lg \lg n)
+\end{align*}
+
 
 \subsection{Master Theorem}
 \begin{description}
@@ -37,6 +75,11 @@
 \end{description}
 \begin{align*}
     \exists c. c < 1 \land af\left(\frac n b\right) < cf(n)
+    T(n) = a T\left(\frac n b\right) + f(n) \\
+    \frac{f(n)}{n^{\log_b a}} \in O(n^{-\epsilon})  \Rightarrow& T(n) \in \Theta(n^{\log_b a}) \text { for some } \epsilon > 0  \\
+    \frac{f(n)}{n^{\log_b a}} \in \Theta(1) \Rightarrow& T(n) \in \Theta(n^{\log_b a} \lg n) \\
+    \frac{f(n)}{n^{\log_b a}} \in \Omega(n^{\epsilon}) \Rightarrow& T(n) \in \Theta(f(n)) \text{ for some } \epsilon > 0 \\&\text{ and } af(\frac{n}{b}) \leq cf(n) \text{ for some } c < 1 \\
+f(n) \in \Theta(n^{\log_b a} \lg^{k +1} n) \Rightarrow& T(n) \in \Theta(n^{\log_b a} \lg^{k} n)\\ &\text{if } f(n) \text{ is larger}\\ &\text{but not polynomial larger than } n^{\log_b a}\\
 \end{align*}
 \begin{description}
     \item[Polynomially Larger Than] (defined below) is used in cases 1 and 3 of the master theorem.
@@ -54,7 +97,47 @@
         Ensure that $\forall i. \Phi(D_i) \geq \Phi(D_0)$.
 \end{description}
 
-\section{Graph Errata}
+\section{Graphs}
+
+\begin{itemize}
+    \item A path is a sequence of vertices with edges between them
+    \item $u$ is reachable from $v$ if there is a path from $v$ to $u$
+    \item A path is:
+    \item \begin{itemize}
+        \item simple if all verticies in the path are distinct
+        \item a cycle if the start and end vertices are the same, if there are more than 2 vertices
+    \end{itemize}
+    \item A cycle is simple if all the vertices and edges are distinct
+    \item An undirected graph is :
+        \begin{itemize}
+            \item connected if every vertex is reachable from all other vertices
+            \item a forest if it is acyclic
+            \item a tree if it is a forest with only one connected component
+        \end{itemize}
+    \item An directed graph is strongly connected if every two vertices are reachable from each other
+    \item $G' = (V', E')$ is a sub-graph of $G = (V, E)$ when $V' \subseteq V$ and $E' \subseteq E$
+    \item $G'$ is a spanning sub-graph of G if $V' = V$
+    \item The sub-graph of $G = (V, E)$ that is induced by $V'$ is the $G' = (V', E')$ where $E' = \{(u, v) \in E: u \in V' \wedge v \in V' \}$
+    \item Adjacency lists are efficient for spare graphs, where there are few edges relative to the number of vertices, as opposed to adjacency matrices
+\end{itemize}
+
+\begin{lstlisting}
+isAdjacentTo(v, u)
+\end{lstlisting}
+\begin{description}
+    \item[List] worst case $\Theta(V)$
+    \item[Matrix] worst case $\Theta(1)$
+\end{description}
+
+\begin{lstlisting}
+neighbours(v)
+\end{lstlisting}
+\begin{description}
+    \item[List] worst case $\Theta(V + E)$
+    \item[Matrix] worst case $\Theta(V^2)$
+\end{description}
+
+
 \subsection{Handshake Lemma}
 \begin{lstlisting}
 for v in G.V
@@ -66,8 +149,6 @@ for v in G.V
     \item[Complexity] $\Theta((V+E) \times OPERATION + V^2)$ for adjacency matrix.
 \end{description}
 
-\section{Graph Algorithms}
-
 \subsection{Breadth First Search}
 \begin{description}
     \item[Complexity] $\Theta(V+E)$ for adjacency list.
@@ -76,7 +157,32 @@ for v in G.V
     \item[Finds] shortest path to each node from source, assuming equal weights.
 \end{description}
 
+% TODO: L3-2018: 46 back and forward edges
 \subsection{Depth First Search}
+\begin{lstlisting}
+DFS(G, s)
+    time = 0
+    for u in G.V - {S}
+        u.colour = white
+        u.parent = NIL
+    s.colour = grey
+    s.parent = NIL
+    for u in G.V
+        if u.colour == white
+            DFS-VISIT(G, u)
+
+DFS-VISIT(G, u)
+    time = time + 1
+    u.discovery = time
+    for v in G.Adj(u)
+        if v.colour == white
+            v.colour = grey
+            v.parent = u
+            DFS-VISIT(G, v)
+    u.colour = black
+    time = time + 1
+    u.finish = time
+\end{lstlisting}
 \begin{description}
     \item[Complexity] $\Theta(V+E)$ for adjacency list.
     \item[Complexity] $\Theta(V^2)$ for adjacency matrix.
@@ -95,26 +201,48 @@ STRONGLY-CONNECTED-COMPONENTS(G)
     return discrete trees of second search
 \end{lstlisting}
 
+\subsection{Topological sort}
+\begin{lstlisting}
+TOPOLOGICAL-SORT(G)
+    initialise empty linked-list of verts
+    call DFS(G)
+    as each vert is finished, 
+        insert onto front of a linked list
+    return the list of vertices
+\end{lstlisting}
+
 \subsection{Kruskal's Minimum Spanning Tree}
 \begin{lstlisting}
+FIND-SET(x)
+if x != x.p
+    x.p = FIND-SET(x.p) 
+    // ^ performs path compression
+    return x.p
+
 MST-KRUSKAL(G, w)
     A = {}
     for u in G.V
         MAKE-SET(u)
     SORT(G.E, w)
-    for u,v in G.E
+    for (u, v) in G.E
         if FIND-SET(u) != FIND-SET(v)
             A = A + {(u, v)}
             UNION(u, v)
     return A
 \end{lstlisting}
 \begin{description}
-    \item[Complexity] $\Theta(V+E\log{E})$
     \item[Finds] Minimum spanning tree - subset of edges such that all vertices are connected and sum of edge weight is minimised.
+    \item[Complexity] $\Theta(E\lg{E})$ using union-find trees
+    \item[Notes] \texttt{UNION} ensures the tree with fewer nodes is made to point ot the tree with more nodes (to avoid updating \texttt{rank}) (unless they have equal rank, then you have to increment rank of the new representative)
 \end{description}
 
 \subsection{Priority First Search}
 \begin{lstlisting}
+RELAX(u, v, w)
+    if v.d > PRIORITY
+        v.d = PRIORITY
+        v.pi = u
+
 PRIORITY-FIRST-SEARCH(G, s, ...)
     INIT-SINGLE-SOURCE(G, s)
     Q = G.V
@@ -125,8 +253,8 @@ PRIORITY-FIRST-SEARCH(G, s, ...)
 \end{lstlisting}
 \begin{description}
     \item[Complexity] $\Theta(V)\cdot T_{EXTRACT} + \Theta(E)\cdot T_{DECREASE}$
-    \item[Complexity] $O(E\log{V})$ for binary heap.
-    \item[Complexity] $O(E+V\log{V})$ for fibonacci heap.
+    \item[Complexity] $O(E\lg{V})$ for binary heap.
+    \item[Complexity] $O(E + V\lg{V})$ for fibonacci heap.
 \end{description}
 
 \subsection{Prim's Minimum Spanning Tree}
@@ -143,7 +271,7 @@ Priority first search with \lstinline{PRIORITY(u, v, w) = u.key + w(u, v)}.
     \item[Finds] Single source shortest path to any node, assuming no negative edges.
 \end{description}
 
-\subsection{Bellman Ford}
+\subsection{Bellman-ford}
 \begin{lstlisting}
 BELLMAN-FORD(G, w, s)
     INIT-SINGLE-SOURCE(G, s)
@@ -155,6 +283,7 @@ BELLMAN-FORD(G, w, s)
             return FALSE
     return TRUE
 \end{lstlisting}
+
 \begin{description}
     \item[Complexity] $O(V\cdot E)$
     \item[Finds] Single source shortest path to any node, assuming no negative cycles.
@@ -178,6 +307,57 @@ BELLMAN-FORD(G, w, s)
     \item[NP complete] problems are NP hard problems that are in NP.
     \item[P = NP] probably not.
 \end{description}
+
+\subsection{Accounting method}
+
+\begin{enumerate}
+    \item Recall actual cost
+    \item Define amoritised cost
+    \item Ensure that the amortised cost is an upper bound on the actual cost
+\end{enumerate}
+
+The amortised cost must be an upper bound on the actual cost, such that the total amortised cost minus the total actual cost is never negative.
+
+\subsection{Potential method}
+
+\begin{enumerate}
+    \item Recall actual cost
+    \item Define potential function, and ensure that $\Phi(D_0) \leq \Phi(D_i)$ for all $i > 0$.
+    \item Determine the amoritised cost of each operation from $\Phi$.
+\end{enumerate}
+
+\begin{align*}
+    \hat{c}_i &= c_i + (\Phi(D_i) - \Phi(D_i - 1))
+\end{align*}
+
+\subsection{Complexity}
+
+Let $L$ be some problem.
+
+$L \in P$ means there exists a polynomial-time algorithm to solve $L$.
+$L \in NP$ means there exists polynomial-time algorithm to verify a solution to $L$. 
+
+$L \in NP \wedge L \in P \Rightarrow P = NP$.
+
+A concrete decision problem $B$ is NP-hard when every problem
+$A \in NP$ is polynomial-time reducible to $B$.
+
+$L \in NP-\text{complete} \Leftrightarrow L \in NP-\text{hard} \wedge L \in NP$.
+
+
+Say we can reduce an instance $\alpha$ of $A$ to an instance $\beta$ of $B$ in polynomial time. 
+
+If $B$ is easy, then so is $A$.
+
+If $A$ is hard, then so is $B$.
+
+Let $X$ be your own problem.
+If you can show that CIRCUIT-SAT is polynomial-time reducible to $X$, then $X$ is $NP$-hard.
+
+To show that $X$ is $NP$-complete you also need to show it is in $NP$.
+
+CIRCUIT-SAT, SAT, 3-CNF-SAT, CLIQUE (SUBSET-SUM), VERTEX-COVER, HAM-CYCLE, TSP
+
 
 \end{multicols*}
 \end{document}
