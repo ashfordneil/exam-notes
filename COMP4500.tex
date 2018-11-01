@@ -24,11 +24,33 @@
 
 \subsection{Master Theorem}
 \begin{align*}
-    T(n) = a T\left(\frac n b\right) + f(n) \\
-    f(n) = O(n^{\log_b a}) \Rightarrow& T(n) =\Theta(n^{\log_b a}) \\
-    f(n) = \Theta(n^{\log_b a} \log^k n) \Rightarrow& T(n) = \Theta(n^{\log_b a} \log^{k+1} n) \\
-    \frac {f(n) = \Omega(n^{\log_b a})} {af(\frac n b) \leq f(n)} \Rightarrow& T(n) = \Theta(f(n)) \\
+    T(n) =& a T\left(\frac n b\right) + f(n) \\
+    n^{log_b a} > f(n) \Rightarrow& T(n) \in \Theta(n^{log_b a}) \\
+    n^{log_b a} = f(n) \Rightarrow& T(n) \in \Theta(lg(n) \cdot n^{\log_b a}) \\
+    f(n) > n^{log_b a} \Rightarrow& T(n) \in \Theta(f(n)) \\
 \end{align*}
+
+\begin{description}
+    \item[Regularity] (defined below) in $f(n)$ is needed for case three of the master theorem.
+\end{description}
+\begin{align*}
+    \exists c. c < 1 \land af\left(\frac n b\right) < cf(n)
+\end{align*}
+\begin{description}
+    \item[Polynomially Larger Than] (defined below) is used in cases 1 and 3 of the master theorem.
+\end{description}
+\begin{align*}
+    f(n) > g(n) \Rightarrow& \exists \epsilon. \epsilon > 0 \land f(n) \in \Omega(b(n) n^\epsilon)
+\end{align*}
+
+\subsection{Amortized Analysis}
+\begin{description}
+    \item[Aggregate analysis] Evaluate the summation of multiple operations, and then take the average.
+    \item[Accounting method] Define a heuristic amortized cost for each operation, that will never decrease the total cost.
+        Perform analysis with this cost instead.
+    \item[Potential method] Define a cost function $\Phi$ on the data structure. Find an amortized cost such that $\hat{c_i} = c_i + (\Phi(D_i) - \Phi(D_{i - 1}))$.
+        Ensure that $\forall i. \Phi(D_i) \geq \Phi(D_0)$.
+\end{description}
 
 \section{Graph Errata}
 \subsection{Handshake Lemma}
@@ -38,34 +60,13 @@ for v in G.V
         OPERATION
 \end{lstlisting}
 \begin{description}
-    \item[Complexity] $\Theta(E \times OPERATION)$ for adjacency list
-    \item[Complexity] $\Theta(E \times OPERATION + V^2)$ for adjacency matrix
+    \item[Complexity] $\Theta((V+E) \times OPERATION)$ for adjacency list
+    \item[Complexity] $\Theta((V+E) \times OPERATION + V^2)$ for adjacency matrix
 \end{description}
 
 \section{Graph Algorithms}
 
 \subsection{Breadth First Search}
-\begin{lstlisting}
-BFS(G, s)
-    for u in G.V - {s}
-        u.colour = white
-        u.d = infinity
-        u.parent = NIL
-    s.colour = grey
-    s.d = 0
-    s.parent = NIL
-    Q = {}
-    ENQUEUE(Q, s)
-    while Q != {}
-        u = DEQUEUE(Q)
-        for v in G.Adj(u)
-            if v.colour == white
-                v.colour = grey
-                v.d = u.d + 1
-                v.parent = u
-                ENQUEUE(Q, b)
-        u.colour = black
-\end{lstlisting}
 \begin{description}
     \item[Complexity] $\Theta(V+E)$ for adjacency list
     \item[Complexity] $\Theta(V^2)$ for adjacency matrix
@@ -74,30 +75,6 @@ BFS(G, s)
 \end{description}
 
 \subsection{Depth First Search}
-\begin{lstlisting}
-DFS(G, s)
-    time = 0
-    for u in G.V - {S}
-        u.colour = white
-        udparent = NIL
-    s.colour = grey
-    s.parent = NIL
-    for u in G.V
-        if u.colour == white
-            DFS-VISIT(G, u)
-
-DFS-VISIT(G, u)
-    time = time + 1
-    u.discovery = time
-    for v in G.Adj(u)
-        if v.colour == white
-            v.colour = grey
-            v.parent = u
-            DFS-VISIT(G, v)
-    u.colour = black
-    time = time + 1
-    u.finish = time
-\end{lstlisting}
 \begin{description}
     \item[Complexity] $\Theta(V+E)$ for adjacency list
     \item[Complexity] $\Theta(V^2)$ for adjacency matrix
@@ -180,6 +157,24 @@ BELLMAN-FORD(G, w, s)
     \item[Complexity] $O(V\cdot E)$
     \item[Finds] Single source shortest path to any node, assuming no negative cycles
     \item[Finds] The existence of negative cycles
+\end{description}
+
+\section{Dynamic Programming}
+\begin{description}
+    \item[Caching] of solutions to subproblems in typically recursive algorithms.
+    \item[Top down] is still recursive, but a cache of solved subproblems is maintained.
+    \item[Buttom up] is iterative, starting with the base case and building constructively up to the original problem.
+        Results are stored in arrays, and better constant factors are achieved.
+\end{description}
+
+\section{P vs NP}
+\begin{description}
+    \item[P] problems are those that can be solved in polynomial time by a deterministic turing machine.
+    \item[NP] problems are those that can be solved in polynomial time by a nondeterministic turing machine.
+        Also the problems that a solution (certificate) to which can be \emph{verified} in polynomial time by a deterministic turing machine.
+    \item[NP hard] problems are problems that any problem in NP can be reduced to in polynomial times.
+    \item[NP complete] problems are NP hard problems that are in NP.
+    \item[P = NP] probably not.
 \end{description}
 
 \end{multicols*}
