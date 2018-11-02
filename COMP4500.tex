@@ -40,7 +40,7 @@
     \item[Polynomially Larger Than] (defined below) is used in cases 1 and 3 of the master theorem.
 \end{description}
 \begin{align*}
-    f(n) > g(n) \Rightarrow& \exists \epsilon. \epsilon > 0 \land f(n) \in \Omega(b(n) n^\epsilon)
+    f(n) > g(n) \Rightarrow& \exists \epsilon. \epsilon > 0 \land f(n) \in \Omega(g(n) n^\epsilon)
 \end{align*}
 
 \subsection{Amortized Analysis}
@@ -80,7 +80,7 @@ for v in G.V
     \item[Complexity] $\Theta(V^2)$ for adjacency matrix
     \item[Finds] depth first forests of graph
     \item[Finds] loops, if you find a grey vertex in DFS-VISIT
-    \item[Finds] a topological sort, if you order by $u.finish$
+    \item[Finds] a topological sort, if you output in descending order by $u.finish$
 \end{description}
 
 \subsection{Strongly Connected Components}
