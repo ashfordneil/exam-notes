@@ -15,19 +15,21 @@
 
 \subsection{Definitions of Complexities}
 \begin{align*}
-    f(n) = \Theta(g(n)) \Rightarrow& \forall n > n_0, 0 \leq c_1 \cdot g(n) \leq f(n) \leq c_2 \cdot g(n) \\
-    f(n) = O(g(n)) \Rightarrow& \forall n > n_0, 0 \leq f(n) \leq c \cdot g(n) \\
-    f(n) = \Omega(g(n)) \Rightarrow& \forall n > n_0, 0 \leq c \cdot g(n) \leq f(n) \\
-    f(n) = o(g(n)) \Rightarrow& \lim_{n \rightarrow \infty} \frac {f(n)} {g(n)} = 0 \\
-    f(n) = \omega(g(n)) \Rightarrow& \lim_{n \rightarrow \infty} \frac {g(n)} {f(n)} = 0 \\
+    f(n) = \Theta(g(n)) \Leftrightarrow& \forall n > n_0, 0 \leq c_1 \cdot g(n) \leq f(n) \leq c_2 \cdot g(n) \\
+    f(n) = O(g(n)) \Leftrightarrow& \forall n > n_0, 0 \leq f(n) \leq c \cdot g(n) \\
+    f(n) = \Omega(g(n)) \Leftrightarrow& \forall n > n_0, 0 \leq c \cdot g(n) \leq f(n) \\
+    f(n) = o(g(n)) \Leftrightarrow& \lim_{n \rightarrow \infty} \frac {f(n)} {g(n)} = 0 \\
+    f(n) = \omega(g(n)) \Leftrightarrow& \lim_{n \rightarrow \infty} \frac {g(n)} {f(n)} = 0 \\
 \end{align*}
 
 \subsection{Master Theorem}
+\begin{description}
+    \item[Find] $a \geq 1$ and $b \geq 1$ such that $T(n) = a T\left(\frac n b\right) + f(n)$
+\end{description}
 \begin{align*}
-    T(n) =& a T\left(\frac n b\right) + f(n) \\
-    n^{log_b a} > f(n) \Rightarrow& T(n) \in \Theta(n^{log_b a}) \\
-    n^{log_b a} = f(n) \Rightarrow& T(n) \in \Theta(lg(n) \cdot n^{\log_b a}) \\
-    f(n) > n^{log_b a} \Rightarrow& T(n) \in \Theta(f(n)) \\
+    n^{\log_b a} > f(n) \Rightarrow& T(n) \in \Theta(n^{log_b a}) \\
+    n^{\log_b a} \cdot \lg^k(n) \in \Theta(f(n)) \Rightarrow& T(n) \in \Theta(\lg^{k+1}(n) \cdot n^{\log_b a}) \\
+    f(n) > n^{\log_b a} \Rightarrow& T(n) \in \Theta(f(n)) \\
 \end{align*}
 
 \begin{description}
@@ -40,15 +42,15 @@
     \item[Polynomially Larger Than] (defined below) is used in cases 1 and 3 of the master theorem.
 \end{description}
 \begin{align*}
-    f(n) > g(n) \Rightarrow& \exists \epsilon. \epsilon > 0 \land f(n) \in \Omega(g(n) n^\epsilon)
+    f(n) > g(n) \Leftrightarrow& \exists \epsilon. \epsilon > 0 \land f(n) \in \Omega(g(n) \cdot n^\epsilon)
 \end{align*}
 
 \subsection{Amortized Analysis}
 \begin{description}
     \item[Aggregate analysis] Evaluate the summation of multiple operations, and then take the average.
-    \item[Accounting method] Define a heuristic amortized cost for each operation, that will never decrease the total cost.
+    \item[Accounting method] Define an amortized cost for each operation, that will never decrease the total cost.
         Perform analysis with this cost instead.
-    \item[Potential method] Define a cost function $\Phi$ on the data structure. Find an amortized cost such that $\hat{c_i} = c_i + (\Phi(D_i) - \Phi(D_{i - 1}))$.
+    \item[Potential method] Define a cost function $\Phi$ on the data structure. Find an amortized cost such that $\hat{c_i} = c_i + \Delta \Phi(D_i)$.
         Ensure that $\forall i. \Phi(D_i) \geq \Phi(D_0)$.
 \end{description}
 
@@ -60,27 +62,27 @@ for v in G.V
         OPERATION
 \end{lstlisting}
 \begin{description}
-    \item[Complexity] $\Theta((V+E) \times OPERATION)$ for adjacency list
-    \item[Complexity] $\Theta((V+E) \times OPERATION + V^2)$ for adjacency matrix
+    \item[Complexity] $\Theta((V+E) \times OPERATION)$ for adjacency list.
+    \item[Complexity] $\Theta((V+E) \times OPERATION + V^2)$ for adjacency matrix.
 \end{description}
 
 \section{Graph Algorithms}
 
 \subsection{Breadth First Search}
 \begin{description}
-    \item[Complexity] $\Theta(V+E)$ for adjacency list
-    \item[Complexity] $\Theta(V^2)$ for adjacency matrix
-    \item[Finds] breadth first tree of graph
-    \item[Finds] shortest path to each node from source, assuming equal weights
+    \item[Complexity] $\Theta(V+E)$ for adjacency list.
+    \item[Complexity] $\Theta(V^2)$ for adjacency matrix.
+    \item[Finds] breadth first tree of graph.
+    \item[Finds] shortest path to each node from source, assuming equal weights.
 \end{description}
 
 \subsection{Depth First Search}
 \begin{description}
-    \item[Complexity] $\Theta(V+E)$ for adjacency list
-    \item[Complexity] $\Theta(V^2)$ for adjacency matrix
-    \item[Finds] depth first forests of graph
-    \item[Finds] loops, if you find a grey vertex in DFS-VISIT
-    \item[Finds] a topological sort, if you output in descending order by $u.finish$
+    \item[Complexity] $\Theta(V+E)$ for adjacency list.
+    \item[Complexity] $\Theta(V^2)$ for adjacency matrix.
+    \item[Finds] depth first forests of graph.
+    \item[Finds] loops, if you find a grey vertex in DFS-VISIT.
+    \item[Finds] a topological sort, if you output in descending order by $u.finish$.
 \end{description}
 
 \subsection{Strongly Connected Components}
@@ -108,7 +110,7 @@ MST-KRUSKAL(G, w)
 \end{lstlisting}
 \begin{description}
     \item[Complexity] $\Theta(V+E\log{E})$
-    \item[Finds] Minimum spanning tree - subset of edges such that all vertices are connected and sum of edge weight is minimised
+    \item[Finds] Minimum spanning tree - subset of edges such that all vertices are connected and sum of edge weight is minimised.
 \end{description}
 
 \subsection{Priority First Search}
@@ -123,22 +125,22 @@ PRIORITY-FIRST-SEARCH(G, s, ...)
 \end{lstlisting}
 \begin{description}
     \item[Complexity] $\Theta(V)\cdot T_{EXTRACT} + \Theta(E)\cdot T_{DECREASE}$
-    \item[Complexity] $O(E\log{V})$ for binary heap
-    \item[Complexity] $O(E+V\log{V})$ for fibonacci heap
+    \item[Complexity] $O(E\log{V})$ for binary heap.
+    \item[Complexity] $O(E+V\log{V})$ for fibonacci heap.
 \end{description}
 
 \subsection{Prim's Minimum Spanning Tree}
-Priority first search with $Priority(u, v, w) = w(u, v)$.
+Priority first search with \lstinline{PRIORITY(u, v, w) = w(u, v)}.
 \begin{description}
-    \item[Complexity] Same as priority first search
-    \item[Finds] Minimum spanning tree
+    \item[Complexity] Same as priority first search.
+    \item[Finds] Minimum spanning tree.
 \end{description}
 
 \subsection{Dijkstra'a Algorithm}
-Priority first search with $Priority(u, v, w) = u.key + w(u, v)$.
+Priority first search with \lstinline{PRIORITY(u, v, w) = u.key + w(u, v)}.
 \begin{description}
-    \item[Complexity] Same as priority first search
-    \item[Finds] Single source shortest path to any node, assuming no negative edges
+    \item[Complexity] Same as priority first search.
+    \item[Finds] Single source shortest path to any node, assuming no negative edges.
 \end{description}
 
 \subsection{Bellman Ford}
@@ -155,8 +157,8 @@ BELLMAN-FORD(G, w, s)
 \end{lstlisting}
 \begin{description}
     \item[Complexity] $O(V\cdot E)$
-    \item[Finds] Single source shortest path to any node, assuming no negative cycles
-    \item[Finds] The existence of negative cycles
+    \item[Finds] Single source shortest path to any node, assuming no negative cycles.
+    \item[Finds] The existence of negative cycles.
 \end{description}
 
 \section{Dynamic Programming}
@@ -172,7 +174,7 @@ BELLMAN-FORD(G, w, s)
     \item[P] problems are those that can be solved in polynomial time by a deterministic turing machine.
     \item[NP] problems are those that can be solved in polynomial time by a nondeterministic turing machine.
         Also the problems that a solution (certificate) to which can be \emph{verified} in polynomial time by a deterministic turing machine.
-    \item[NP hard] problems are problems that any problem in NP can be reduced to in polynomial times.
+    \item[NP hard] problems are problems that any problem in NP can be reduced to in polynomial time.
     \item[NP complete] problems are NP hard problems that are in NP.
     \item[P = NP] probably not.
 \end{description}
