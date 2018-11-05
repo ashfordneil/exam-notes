@@ -62,10 +62,8 @@ where $D$ is the time to divide the problem, and $C$ is the time to combine subs
 \subsubsection{Master Theorem}
 \begin{description}
     \item[Find] $a \geq 1$ and $b \geq 1$ such that $T(n) = a T\left(\frac n b\right) + f(n)$
-    \item[Regularity] (defined below) in $f(n)$ is needed for case three of the master theorem.
 \end{description}
 \begin{align*}
-    \exists c. c < 1 \land af\left(\frac n b\right) < cf(n)\\
     T(n) = a T\left(\frac n b\right) + f(n) \\
     \frac{f(n)}{n^{\log_b a}} \in O(n^{-\epsilon})  \Rightarrow& T(n) \in \Theta(n^{\log_b a}) \text { for some } \epsilon > 0  \\
     \frac{f(n)}{n^{\log_b a}} \in \Theta(1) \Rightarrow& T(n) \in \Theta(n^{\log_b a} \lg n) \\
@@ -77,6 +75,13 @@ f(n) \in \Theta(n^{\log_b a} \lg^{k +1} n) \Rightarrow& T(n) \in \Theta(n^{\log_
 \end{description}
 \begin{align*}
     f(n) > g(n) \Leftrightarrow& \exists \epsilon. \epsilon > 0 \land f(n) \in \Omega(g(n) \cdot n^\epsilon)
+\end{align*}
+
+\begin{description}
+    \item[Regularity] $f$ in Case 3 must be regular
+\end{description}
+\begin{align*}
+    \exists c. c < 1 \land af\left(\frac n b\right) < cf(n)\\
 \end{align*}
 
 \subsection{Amortized Analysis}
