@@ -40,9 +40,8 @@
 % TODO: math: 16 and 17
 \end{align*}
 
-\section{Recurrences}
-
-
+\section{Analysis}
+\subsection{Recurrences}
 \begin{align*}
     T(n) =& aT(\frac{n}{b}) + D(n) + C(n)
 \end{align*}
@@ -60,21 +59,13 @@ where $D$ is the time to divide the problem, and $C$ is the time to combine subs
 \end{align*}
 
 
-\subsection{Master Theorem}
+\subsubsection{Master Theorem}
 \begin{description}
     \item[Find] $a \geq 1$ and $b \geq 1$ such that $T(n) = a T\left(\frac n b\right) + f(n)$
-\end{description}
-\begin{align*}
-    n^{\log_b a} > f(n) \Rightarrow& T(n) \in \Theta(n^{log_b a}) \\
-    n^{\log_b a} \cdot \lg^k(n) \in \Theta(f(n)) \Rightarrow& T(n) \in \Theta(\lg^{k+1}(n) \cdot n^{\log_b a}) \\
-    f(n) > n^{\log_b a} \Rightarrow& T(n) \in \Theta(f(n)) \\
-\end{align*}
-
-\begin{description}
     \item[Regularity] (defined below) in $f(n)$ is needed for case three of the master theorem.
 \end{description}
 \begin{align*}
-    \exists c. c < 1 \land af\left(\frac n b\right) < cf(n)
+    \exists c. c < 1 \land af\left(\frac n b\right) < cf(n)\\
     T(n) = a T\left(\frac n b\right) + f(n) \\
     \frac{f(n)}{n^{\log_b a}} \in O(n^{-\epsilon})  \Rightarrow& T(n) \in \Theta(n^{\log_b a}) \text { for some } \epsilon > 0  \\
     \frac{f(n)}{n^{\log_b a}} \in \Theta(1) \Rightarrow& T(n) \in \Theta(n^{\log_b a} \lg n) \\
@@ -82,20 +73,33 @@ where $D$ is the time to divide the problem, and $C$ is the time to combine subs
 f(n) \in \Theta(n^{\log_b a} \lg^{k +1} n) \Rightarrow& T(n) \in \Theta(n^{\log_b a} \lg^{k} n)\\ &\text{if } f(n) \text{ is larger}\\ &\text{but not polynomial larger than } n^{\log_b a}\\
 \end{align*}
 \begin{description}
-    \item[Polynomially Larger Than] (defined below) is used in cases 1 and 3 of the master theorem.
+    \item[Polynomially Larger Than]
 \end{description}
 \begin{align*}
     f(n) > g(n) \Leftrightarrow& \exists \epsilon. \epsilon > 0 \land f(n) \in \Omega(g(n) \cdot n^\epsilon)
 \end{align*}
 
 \subsection{Amortized Analysis}
-\begin{description}
-    \item[Aggregate analysis] Evaluate the summation of multiple operations, and then take the average.
-    \item[Accounting method] Define an amortized cost for each operation, that will never decrease the total cost.
-        Perform analysis with this cost instead.
-    \item[Potential method] Define a cost function $\Phi$ on the data structure. Find an amortized cost such that $\hat{c_i} = c_i + \Delta \Phi(D_i)$.
-        Ensure that $\forall i. \Phi(D_i) \geq \Phi(D_0)$.
-\end{description}
+\subsubsection{Accounting method}
+\begin{enumerate}
+    \item Recall actual cost
+    \item Define amoritised cost
+    \item Ensure that the amortised cost is an upper bound on the actual cost
+\end{enumerate}
+
+The amortised cost must be an upper bound on the actual cost, such that the total amortised cost minus the total actual cost is never negative.
+
+\subsection{Potential method}
+
+\begin{enumerate}
+    \item Recall actual cost
+    \item Define potential function, and ensure that $\forall i. \Phi(D_0) \leq \Phi(D_i)$ for all $i > 0$.
+    \item Determine the amoritised cost of each operation from $\Phi$.
+\end{enumerate}
+
+\begin{align*}
+    \hat{c}_i &= c_i + (\Phi(D_i) - \Phi(D_i - 1))
+\end{align*}
 
 \section{Graphs}
 
@@ -298,7 +302,7 @@ BELLMAN-FORD(G, w, s)
         Results are stored in arrays, and better constant factors are achieved.
 \end{description}
 
-\section{P vs NP}
+\section{Complexity}
 \begin{description}
     \item[P] problems are those that can be solved in polynomial time by a deterministic turing machine.
     \item[NP] problems are those that can be solved in polynomial time by a nondeterministic turing machine.
@@ -308,53 +312,21 @@ BELLMAN-FORD(G, w, s)
     \item[P = NP] probably not.
 \end{description}
 
-\subsection{Accounting method}
-
-\begin{enumerate}
-    \item Recall actual cost
-    \item Define amoritised cost
-    \item Ensure that the amortised cost is an upper bound on the actual cost
-\end{enumerate}
-
-The amortised cost must be an upper bound on the actual cost, such that the total amortised cost minus the total actual cost is never negative.
-
-\subsection{Potential method}
-
-\begin{enumerate}
-    \item Recall actual cost
-    \item Define potential function, and ensure that $\Phi(D_0) \leq \Phi(D_i)$ for all $i > 0$.
-    \item Determine the amoritised cost of each operation from $\Phi$.
-\end{enumerate}
-
 \begin{align*}
-    \hat{c}_i &= c_i + (\Phi(D_i) - \Phi(D_i - 1))
+L \in NP \wedge L \in P &\Rightarrow P = NP\\
+L \in NPC &\Leftrightarrow L \in NPH \wedge L \in NP\\
 \end{align*}
 
-\subsection{Complexity}
-
-Let $L$ be some problem.
-
-$L \in P$ means there exists a polynomial-time algorithm to solve $L$.
-$L \in NP$ means there exists polynomial-time algorithm to verify a solution to $L$. 
-
-$L \in NP \wedge L \in P \Rightarrow P = NP$.
-
-A concrete decision problem $B$ is NP-hard when every problem
-$A \in NP$ is polynomial-time reducible to $B$.
-
-$L \in NP-\text{complete} \Leftrightarrow L \in NP-\text{hard} \wedge L \in NP$.
+Let $L$ be some problem. $L \in P$ means there exists a polynomial-time algorithm to solve $L$. $L \in NP$ means there exists polynomial-time algorithm to verify a solution to $L$. 
 
 
-Say we can reduce an instance $\alpha$ of $A$ to an instance $\beta$ of $B$ in polynomial time. 
+A concrete decision problem $B$ is NP-hard when every problem $A \in NP$ is polynomial-time reducible to $B$.
 
-If $B$ is easy, then so is $A$.
 
-If $A$ is hard, then so is $B$.
 
-Let $X$ be your own problem.
-If you can show that CIRCUIT-SAT is polynomial-time reducible to $X$, then $X$ is $NP$-hard.
+Say we can reduce an instance $\alpha$ of $A$ to an instance $\beta$ of $B$ in polynomial time. If $B$ is easy, then so is $A$. If $A$ is hard, then so is $B$.
 
-To show that $X$ is $NP$-complete you also need to show it is in $NP$.
+Let $X$ be your own problem. If you can show that CIRCUIT-SAT is polynomial-time reducible to $X$, then $X$ is $NP$-hard. To show that $X$ is $NP$-complete you also need to show it is in $NP$.
 
 CIRCUIT-SAT, SAT, 3-CNF-SAT, CLIQUE (SUBSET-SUM), VERTEX-COVER, HAM-CYCLE, TSP
 
