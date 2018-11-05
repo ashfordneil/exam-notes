@@ -317,16 +317,10 @@ L \in NP \wedge L \in P &\Rightarrow P = NP\\
 L \in NPC &\Leftrightarrow L \in NPH \wedge L \in NP\\
 \end{align*}
 
-Let $L$ be some problem. $L \in P$ means there exists a polynomial-time algorithm to solve $L$. $L \in NP$ means there exists polynomial-time algorithm to verify a solution to $L$. 
-
-
-A concrete decision problem $B$ is NP-hard when every problem $A \in NP$ is polynomial-time reducible to $B$.
-
-
-
 Say we can reduce an instance $\alpha$ of $A$ to an instance $\beta$ of $B$ in polynomial time. If $B$ is easy, then so is $A$. If $A$ is hard, then so is $B$.
 
 Let $X$ be your own problem. If you can show that CIRCUIT-SAT is polynomial-time reducible to $X$, then $X$ is $NP$-hard. To show that $X$ is $NP$-complete you also need to show it is in $NP$.
+
 
 CIRCUIT-SAT, SAT, 3-CNF-SAT, CLIQUE (SUBSET-SUM), VERTEX-COVER, HAM-CYCLE, TSP
 
