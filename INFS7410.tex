@@ -1,0 +1,153 @@
+\documentclass[landscape]{cheat}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+
+\begin{document}
+\footnotesize
+\begin{multicols*}{3}
+
+\begin{center}
+\Large{\underline{INFS7410 Cheat Sheet}} \\
+\end{center}
+
+%% START HERE
+
+\section{Indexing Process}
+\begin{description}
+    \item[Data] Emails, documents, web pages, news articles, letters, etc.
+    \item[Text Acquisition] Collect and store documents for indexing.
+    \item[Text Transformation] Transform documents into index terms (aka features).
+    \item[Index Creation] Construct an inverted index from the transformed text.
+\end{description}
+
+\subsection{Web Crawling}
+\begin{description}
+    \item[Frontier] is a queue of seed URLs that is operated on during crawl process.
+    \item[Freshness] is the fraction of documents which are fresh (boolean quantity).
+    \item[Age] of a downloaded document is the time since it went stale (lower bounded at 0).
+\end{description}
+
+\subsection{Simhash}
+\begin{description}
+    \item[Used] for detection of near duplicates.
+    \item[Features] (e.g. words) or a lack thereof within a document can be used to determine similarity.
+    \item[Weights] (e.g. word frequency or 0) can be determined for each document / feature pair.
+    \item[Hashes] of each feature can be computed, and then transformed into arrays of numbers in $\{1, -1\}$.
+    \item[Aggregation] of per-feature hashes is done by multiplying the array through by the weight of that feature in the document, and then summing for all features.
+        Outputs are then transformed back to binary with a function $f: \mathbb{N} \rightarrow \{1, 0\}$.
+\end{description}
+
+\subsection{Text Transformation}
+\begin{description}
+    \item[Tokenisation] chops contiguous text up into pieces (tokens), removing markup and punctuation.
+    \item[Stop Words] are words too frequent in the language to have meaning, and they are filtered out.
+    \item[Stemming] is the transformation of a word into its base word (stemming $\rightarrow$ stem).
+\end{description}
+
+\subsection{Zipf's Law}
+\begin{align*}
+    r\cdot f =& k \\
+    r\cdot P_r =& c
+\end{align*}
+\begin{description}
+    \item[Rank] $r \in [1, k]$ of a word by popularity / frequency.
+    \item[Frequency] $f \in [1, \infty)$ of a word in the language, scaled so that the least frequent word has $f=1$.
+    \item[Probability] $P_r \in [0, 1)$ of a word's occurrence.
+    \item[Constant] $k$ assumed to be roughly equal to the vocabulary size.
+    \item[Constant] $c$ changes by language, in English $c=0.1$.
+\end{description}
+
+\subsection{Phrases}
+\begin{description}
+    \item[Part of Speech Tagger] breaks sentences up grammatically and identifies phrases.
+    \item[N-gram] find all (contiguous) substrings of the input that are N words long.
+\end{description}
+
+\subsection{Indexing}
+\begin{description}
+    \item[Inverted Index] is a mapping from words to inverted lists.
+    \item[Inverted List] is a list of appearances (postings) of a word within documents in the set.
+        Can include metadata such as word location or frequency.
+    \item[Compression] (and delta encoding) is used to save disk space when storing inverted lists.
+    \item[Skip Pointers] used to reduce the data read into memory and decompressed when performing a lookup.
+    \item[Map-Reduce] is used to distribute the process of indexing.
+        Parts of documents are counted in parallel (\textbf{map}).
+        \textbf{Shuffling} is used to gather all data related to individual words.
+        Aggregation of per-word data is performed in parallel (\textbf{reduce}).
+\end{description}
+
+\section{Query Processing}
+\begin{description}
+    \item[User Interaction] Construct a query, based on user input.
+        Pass metrics onto evaluation stage, read from the document data store, and interact with the ranking process to find results to the query.
+    \item[Evaluation] Pass metric data on, to improve ranking process. Interact with log data.
+    \item[Ranking] process uses the index to find documents that best fit the query.
+\end{description}
+
+\subsection{Steps to Query Processing}
+\begin{description}
+    \item[Retrieve] the postings list of each word in the query.
+    \item[Merge] all postings into one ordered document list, based on ranking criteria.
+    \item[Return] the top ranked documents.
+\end{description}
+
+\subsection{Query Correction}
+\begin{description}
+    \item[Non-word Errors] anything not in the dictionary is an error.
+    \item[Real-word Errors] typographical errors (three $\leftrightarrow$ there), and cognitive errors (piece $\leftrightarrow$ peace).
+    \item[Edit Distance] between words can be used to find potential correction candidates.
+    \item[Noisy Channel Probability] calculates $P(w|e)$, using $P(e|w)$ (potentially edit distance), and $P(w)$ (from language model).
+\end{description}
+
+\section{Ranking Algorithms}
+\begin{description}
+    \item[Boolean Retrieval Model] Gives an absolute boolean value for whether a document matches a query.
+        Queries of the form $w_1 \land (w_2 \lor w_3)$.
+    \item[Vector Space Model] Rank by cosine correlation of $D_i$ document vector and $Q$ query vector.
+        Both vectors are lists of term weights (e.g. $tf\cdot idf$).
+    \item[Binary Independence Model] similar to idf $\log \frac {N-n_i} {n_i}$, but based on a statistical model (under the assumption that all words are independent).
+    \item[BM25] is a modification on tf.idf with scaling factors based on document length added.
+    \item[Query Likelihood Model] Likelihood of finding the query text within a document language model.
+        Potentially smooth with the general language model.
+    \item[Relevance Model] Generate a language model of the document and of the query.
+        Rank documents by the divergence between these two models.
+\end{description}
+
+\subsection{Vector Space Model}
+\begin{description}
+    \item[Term Frequency] $tf_{ik}$ of document $i$, term $k$ is $\frac{f_{ik}}{|{D_i}|}$.
+    \item[Inverse Document Frequency] $idf_k$ of term $k$ is $\log \frac N {n_k}$.
+        Quotient of the number of documents, and the number of documents containing the term.
+\end{description}
+
+\subsection{Language Models}
+\begin{description}
+    \item[Unigram Model] $P(w|X) = \frac {c(w, X)} {|X}$, treat each word as independent.
+    \item[N-gram Model] is a variant on a Markov Chain.
+    \item[KL Divergence] $KL(P||Q) = \sum_x {P(x) \log \frac {P(x)} {Q(x)}}$ is a measure of the difference between a \textbf{true} model P, and an \textbf{approximate} model Q.
+    \item[Relevance Model Ranking] $\sum_w {P(w|R) \log {P(w|D)}}$ can be used as a ranking method.
+        Construct the model out of the top-K documents, instead of out of the query.
+\end{description}
+
+\subsection{Machine Learning}
+\begin{description}
+    \item[Used] to train models, and find the correct parameters to feed to models for optimum results.
+    \item[Generative] models take an existing model, and tune parameters with machine learning.
+    \item[Discriminative] models build up from scratch, directly analysing observed features of the document.
+\end{description}
+
+\section{Evaluation}
+\begin{description}
+    \item[Precision] fraction of retrieved documents that are relevant.
+    \item[Recall] fraction of relevant documents that are retrieved.
+\end{description}
+
+\section{Independent Event Probability Rules}
+\begin{align*}
+    P(a \cap b) =& P(a) \times P(b) \\
+    P(a | b) =& \frac{P(a \cap b)}{P(b)} \\
+    P(c | a \cap b) \approx& \max{\{ P(c | a), P(c | b) \}}
+\end{align*}
+
+\end{multicols*}
+\end{document}
