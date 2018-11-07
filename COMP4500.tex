@@ -6,12 +6,6 @@
 \footnotesize
 \begin{multicols*}{3}
 
-\begin{center}
-\Large{\underline{COMP4500 Cheat Sheet}} \\
-\end{center}
-
-\section{Math}
-
 \begin{align*}
     f \in O(g) \Leftrightarrow& \forall n > n_0, 0 \leq f(n) \leq c \cdot g(n) \\
     f \in \Theta(g) \Leftrightarrow& \forall n > n_0, 0 \leq c_1 \cdot g(n) \leq f(n) \leq c_2 \cdot g(n) \\
@@ -20,6 +14,8 @@
     f \in \omega(g) \Rightarrow& \lim_{n \rightarrow \infty} \frac {g(n)} {f(n)} = 0 \\
 % TODO: asymp: 22 and 23
     \sum_{k=1}^{n} k =& \frac{n(n + 1)}{2}\\
+    \sum_{k=1}^{n} k^2 =& \frac{n(n + 1)(2n + 1)}{6}\\
+    \sum_{k=1}^{n} k^3 =& \frac{n^2 (n + 1)^2}{4}\\
     \sum_{k=0}^{n} x^k =& \frac{x^{n+1} - 1}{x - 1} \text{ for } x \neq 1\\
     \sum_{k=0}^{\infty} x^k =& \frac{1}{1 - x} \text{ for } |x| < 1\\
     \sum_{k=1}^{n} \frac{1}{k} =& \ln n + O(1) (\rightarrow \gamma ~ 0.577 \ldots)\\
@@ -36,7 +32,11 @@
     \log_a b =& \frac{\log_c b}{\log_c a} \text{ for } c > 0\\
     \log(ab) =& \log a + \log b\\
     \log(\frac{1}{a}) =& -\log a\\
-    \log(a^b) =& b \log a
+    \log(a^b) =& b \log a\\
+    (\lg n)^{\lg n} =& n^{\lg \lg n}\\
+    n^{\frac{1}{\lg n}} =& 2\\
+    2^{\sqrt{2 \lg n}} =& n^{\sqrt{\frac{2}{\lg n}}}\\
+    (\sqrt{2})^{\lg n} =& \sqrt{n}\\
 % TODO: math: 16 and 17
 \end{align*}
 
@@ -68,7 +68,7 @@ where $D$ is the time to divide the problem, and $C$ is the time to combine subs
     \frac{f(n)}{n^{\log_b a}} \in O(n^{-\epsilon})  \Rightarrow& T(n) \in \Theta(n^{\log_b a}) \text { for some } \epsilon > 0  \\
     \frac{f(n)}{n^{\log_b a}} \in \Theta(1) \Rightarrow& T(n) \in \Theta(n^{\log_b a} \lg n) \\
     \frac{f(n)}{n^{\log_b a}} \in \Omega(n^{\epsilon}) \Rightarrow& T(n) \in \Theta(f(n)) \text{ for some } \epsilon > 0 \\&\text{ and } af(\frac{n}{b}) \leq cf(n) \text{ for some } c < 1 \\
-f(n) \in \Theta(n^{\log_b a} \lg^{k +1} n) \Rightarrow& T(n) \in \Theta(n^{\log_b a} \lg^{k} n)\\ &\text{if } f(n) \text{ is larger}\\ &\text{but not polynomial larger than } n^{\log_b a}\\
+    f(n) \in \Theta(n^{\log_b a} \lg^{k} n) \Rightarrow& T(n) \in \Theta(n^{\log_b a} \lg^{k + 1} n)\\ &\text{if } f(n) \text{ is larger}\\ &\text{but not polynomial larger than } n^{\log_b a}\\
 \end{align*}
 \begin{description}
     \item[Polynomially Larger Than]
@@ -98,12 +98,12 @@ The amortised cost must be an upper bound on the actual cost, such that the tota
 
 \begin{enumerate}
     \item Recall actual cost
-    \item Define potential function, and ensure that $\forall i. \Phi(D_0) \leq \Phi(D_i)$ for all $i > 0$.
+    \item Define potential function, and ensure that $\forall i. \Phi(D_i) \geq \Phi(D_0)$ for all $i > 0$.
     \item Determine the amoritised cost of each operation from $\Phi$.
 \end{enumerate}
 
 \begin{align*}
-    \hat{c}_i &= c_i + (\Phi(D_i) - \Phi(D_i - 1))
+    \hat{c}_i &= c_i + (\Phi(D_i) - \Phi(D_{i - 1}))
 \end{align*}
 
 \section{Graphs}
