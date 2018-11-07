@@ -1,4 +1,4 @@
-\documentclass[a4paper,landscape]{article}
+\documentclass[10pt, a4paper,landscape]{article}
 \usepackage{amsmath}
 \usepackage{listings}
 
@@ -22,6 +22,7 @@
 \begin{document}
 \begin{multicols*}{4}
 
+\subsection{coolmathgames.com}
 \begin{align*}
     f \in O(g) \Leftrightarrow& \forall n > n_0, 0 \leq f(n) \leq c \cdot g(n) \\
     f \in \Theta(g) \Leftrightarrow& \forall n > n_0, 0 \leq c_1 \cdot g(n) \leq f(n) \leq c_2 \cdot g(n) \\
@@ -60,7 +61,7 @@
 % TODO: math: 16 and 17
 \end{align*}
 
-\subsubsection{Recurrences}
+\subsection{Recurrences}
 \begin{align*}
     T(n) =& aT(\frac{n}{b}) + D(n) + C(n)
 \end{align*}
@@ -84,9 +85,9 @@ where $D$ is the time to divide the problem, and $C$ is the time to combine subs
 \end{description}
 \begin{align*}
     T(n) = a T\left(\frac n b\right) + f(n) \\
-    \frac{f(n)}{n^{\log_b a}} \in O(n^{-\epsilon})  \Rightarrow& T(n) \in \Theta(n^{\log_b a}) \text { for some } \epsilon > 0  \\
+    \frac{f(n)}{n^{\log_b a}} \in O(n^{-\epsilon})  \Rightarrow& T(n) \in \Theta(n^{\log_b a})\\ &\text{ for some } \epsilon > 0 \\
     \frac{f(n)}{n^{\log_b a}} \in \Theta(1) \Rightarrow& T(n) \in \Theta(n^{\log_b a} \lg n) \\
-    \frac{f(n)}{n^{\log_b a}} \in \Omega(n^{\epsilon}) \Rightarrow& T(n) \in \Theta(f(n)) \text{ for some } \epsilon > 0 \\&\text{ and } af(\frac{n}{b}) \leq cf(n) \text{ for some } c < 1 \\
+    \frac{f(n)}{n^{\log_b a}} \in \Omega(n^{\epsilon}) \Rightarrow& T(n) \in \Theta(f(n))\\ &\text{ for some } \epsilon > 0 \\&\text{ and } af(\frac{n}{b}) \leq cf(n)\\ &\text{ for some } c < 1 \\
     f(n) \in \Theta(n^{\log_b a} \lg^{k} n) \Rightarrow& T(n) \in \Theta(n^{\log_b a} \lg^{k + 1} n)\\ &\text{if } f(n) \text{ is larger}\\ &\text{but not polynomial larger than } n^{\log_b a}\\
 \end{align*}
 
@@ -124,6 +125,7 @@ The amortised cost must be an upper bound on the actual cost, such that the tota
     \hat{c}_i &= c_i + (\Phi(D_i) - \Phi(D_{i - 1}))
 \end{align*}
 
+\subsection{Graphs}
 \begin{compactitem}
     \item A path is a sequence of vertices with edges between them
     \item $u$ is reachable from $v$ if there is a path from $v$ to $u$
@@ -146,9 +148,10 @@ The amortised cost must be an upper bound on the actual cost, such that the tota
     \item Adjacency lists are efficient for spare graphs, where there are few edges relative to the number of vertices, as opposed to adjacency matrices
 \end{compactitem}
 
-\texttt{isAdjacentTo(v, u)}, using list representation is $\Theta(V)$, and using matrix representation it's $\Theta(1)$.
+\subsubsection{Representation performance}
+Using matrices, \texttt{isAdjacentTo(v, u)} is $\Theta(1)$ and \texttt{neighbours(v)} is $\Theta(V^2)$.
 
-\texttt{neighbours(v)}, using list adjacency is $\Theta(V + E)$, and using matrix representation it's $\Theta(V^2)$
+Using lists, \texttt{isAdjacentTo(v, u)} is $\Theta(V)$ and \texttt{neighbours(v)} is $\Theta(V + E)$.
 
 \subsubsection{Handshake Lemma}
 \begin{lstlisting}
@@ -200,6 +203,7 @@ DFS-VISIT(G, u)
     \item[Finds] depth first forests of graph.
     \item[Finds] loops, if you find a grey vertex in DFS-VISIT.
     \item[Finds] a topological sort, if you output in descending order by $u.finish$.
+    \item[Note] We find cycles in $O(|V|)$, because we never see back-edges after seeing $|V|$ distinct edges, since in any acyclic undirected forest, $|E| \leq |V| - 1$. 
 \end{description}
 
 \begin{lstlisting}
