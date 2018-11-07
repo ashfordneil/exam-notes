@@ -46,7 +46,6 @@
     \sum_{k=0}^{\infty} kx^k =& \frac{x}{(1 - x)^2}\\
 \end{align*}
 \begin{align*}
-    \lg \prod_{k = 1}^{n} a_k =& \sum_{k = 1}^{n} \lg a_k\\
     b^{\log_b y} =& y\\
     x^a = b \Leftrightarrow & \log_x b = a\\
     a^{\log_b n} =& n^{log_b a}\\
@@ -54,6 +53,7 @@
     \log(ab) =& \log a + \log b\\
     \log(\frac{1}{a}) =& -\log a\\
     \log(a^b) =& b \log a\\
+    \lg \prod_{k = 1}^{n} a_k =& \sum_{k = 1}^{n} \lg a_k\\
     (\lg n)^{\lg n} =& n^{\lg \lg n}\\
     n^{\frac{1}{\lg n}} =& 2\\
     2^{\sqrt{2 \lg n}} =& n^{\sqrt{\frac{2}{\lg n}}}\\
@@ -127,14 +127,12 @@ The amortised cost must be an upper bound on the actual cost, such that the tota
 
 \subsection{Graphs}
 \begin{compactitem}
-    \item A path is a sequence of vertices with edges between them
-    \item $u$ is reachable from $v$ if there is a path from $v$ to $u$
-    \item A path is:
+    \item A path is a sequence of vertices with edges between them, and is:
     \item \begin{compactitem}
         \item simple if all verticies in the path are distinct
-        \item a cycle if the start and end vertices are the same, if there are more than 2 vertices
-    \end{compactitem}
-    \item A cycle is simple if all the vertices and edges are distinct
+        \item a cycle if the start and end vertices are the same, if there are more than 2 vertices, and a simple cycle if all the vertices and edges are distinct
+        \end{compactitem}
+    \item $u$ is reachable from $v$ if there is a path from $v$ to $u$
     \item An undirected graph is :
         \begin{compactitem}
             \item connected if every vertex is reachable from all other vertices
@@ -241,7 +239,7 @@ MST-KRUSKAL(G, w)
 FIND-SET(x)
 if x != x.p
     x.p = FIND-SET(x.p) 
-    // ^ performs path compression
+    // compresses path
     return x.p
 \end{lstlisting}
 \begin{description}
