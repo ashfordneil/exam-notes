@@ -302,21 +302,21 @@ L \in NPC &\Leftrightarrow L \in NPH \wedge L \in NP\\
 T(n) =& 2T(\lfloor n / 2 \rfloor) + 2\\
      \leq& 2(c \lfloor n / 2 \rfloor \lg \lfloor n / 2 \rfloor) + n\\
      \leq& cn \lg(n /2) + n\\
-     =& cn \lg n - cn \lg 2 + n
+     =& cn \lg n - cn \lg 2 + n\\
      =& cn \lg n - cn + n\\
      =&  cn \lg n \text{ for } c \geq 1\\
 \end{align*}
 \begin{align*}
     T(n) =& 2T(\lfloor \sqrt{n} \rfloor) + \lg n\\
     T(2^m) =& 2T(2^{m/2}) + m \text{ where } m = \lg m\\
-    S(2m) =& 2S(m / 2) + m \text{ where } S(m) = T(2^m)\\
+    S(2) =& 2S(m / 2) + m \text{ where } S(m) = T(2^m)\\
     T(n) =& T(2^m) = S(m) = \Theta(m \lg m)\\
         =& \Theta(\lg n \lg \lg n)
 \end{align*}
 
 \subsubsection{Iteration}
 \begin{align*}
-T(n) =& 4T(n = 1) + 1\\
+T(n) =& 4T(n - 1) + 1\\
      =& 4(4T(n - 2) + 1) + 1\\
      =& 4^2T(n - 2) + 4 + 1\\
      =& 4^2(4T(n - 3) + 1) + 4 + 1\\
