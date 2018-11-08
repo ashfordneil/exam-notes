@@ -102,7 +102,7 @@ where $D$ is the time to divide the problem, and $C$ is the time to combine subs
     \item[Regularity] $f$ in Case 3 must be regular
 \end{description}
 \begin{align*}
-    \exists c. c < 1 \land af\left(\frac n b\right) < cf(n)\\
+    \exists c. c < 1 \land af\left(\frac n b\right) \leq cf(n)\\
 \end{align*}
 
 \subsubsection{Accounting method}
@@ -112,7 +112,9 @@ where $D$ is the time to divide the problem, and $C$ is the time to combine subs
     \item Ensure that the amortised cost is an upper bound on the actual cost
 \end{compactitem}
 
-The amortised cost must be an upper bound on the actual cost, such that the total amortised cost minus the total actual cost is never negative.
+\[
+  (\sum_{i =1}^{n} c_i) \leq (\sum_{i =1}^{n} \hat{c}_i) 
+\]
 
 \subsubsection{Potential method}
 \begin{compactitem}
@@ -121,9 +123,7 @@ The amortised cost must be an upper bound on the actual cost, such that the tota
     \item Determine the amoritised cost of each operation from $\Phi$.
 \end{compactitem}
 
-\begin{align*}
-    \hat{c}_i &= c_i + (\Phi(D_i) - \Phi(D_{i - 1}))
-\end{align*}
+\[\hat{c}_i = c_i + (\Phi(D_i) - \Phi(D_{i - 1}))\]
 
 \subsection{Graphs}
 \begin{compactitem}
@@ -213,8 +213,7 @@ DFS-VISIT(G, u)
     u.finish = time
 \end{lstlisting}
 \begin{description}
-    \item[Complexity] $\Theta(V+E)$ for adjacency list.
-    \item[Complexity] $\Theta(V^2)$ for adjacency matrix.
+    \item[Complexity] Same as BFS, for both data structures
     \item[Finds] depth first forests of graph.
     \item[Finds] loops, if you find a grey vertex in DFS-VISIT.
     \item[Finds] a topological sort, if you output in descending order by $u.finish$.
@@ -230,16 +229,6 @@ STRONGLY-CONNECTED-COMPONENTS(G)
     \item call $DFS(G^T)$ but consider vertices in
         decreasing order of $u.f$
     \item return discrete trees of second search
-\end{compactitem}
-
-\begin{lstlisting}
-TOPOLOGICAL-SORT(G)
-\end{lstlisting}
-\begin{compactitem}
-    \item initialise empty linked-list of verts
-    \item call $DFS(G)$
-    \item as each vert is finished, insert onto front of a linked list
-    \item return the list of vertices
 \end{compactitem}
 
 \begin{lstlisting}
@@ -318,6 +307,23 @@ BELLMAN-FORD(G, w, s)
     \item[Finds] The existence of negative cycles.
     \item[Note] For every vertex $v$, $v.d$ has reached its final value if the number of iterations $\geq$ the length of any shortest weight path to $v$.
 \end{description}
+
+% \begin{lstlisting}
+% d := |V| * |V| matrix init to inf
+% for each edge (u,v)
+%   d[u][v] <- w(u,v)
+% for each vertex v
+%    d[v][v] <- 0
+% for k from 1 to |V|
+%   for i from 1 to |V|
+%     for j from 1 to |V|
+%       if d[i][j] > d[i][k] + d[k][j] 
+%         d[i][j] <- d[i][k] + d[k][j]
+%       end if
+% \end{lstlisting}
+% \begin{description}
+%     \item[Complexity] $O(V^3)$
+% \end{description}
 
 \begin{description}
     \item[P] problems are those that can be solved in polynomial time by a deterministic turing machine.
