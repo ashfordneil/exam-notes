@@ -17,93 +17,9 @@
 \linespread{0.9}
 
 \usepackage{paralist}
-
-
 \begin{document}
 \begin{multicols*}{4}
 
-\subsection{coolmathgames.com}
-\begin{align*}
-    f \in O(g) \Leftrightarrow& \forall n > n_0, 0 \leq f(n) \leq c \cdot g(n) \\
-    f \in \Theta(g) \Leftrightarrow& \forall n > n_0, 0 \leq c_1 \cdot g(n) \leq f(n) \leq c_2 \cdot g(n) \\
-    f \in \Omega(g) \Leftrightarrow& \forall n > n_0, 0 \leq c \cdot g(n) \leq f(n) \\
-    f \in o(g) \Rightarrow& \lim_{n \rightarrow \infty} \frac {f(n)} {g(n)} = 0 \\
-    f \in \omega(g) \Rightarrow& \lim_{n \rightarrow \infty} \frac {g(n)} {f(n)} = 0 \\
-% TODO: asymp: 22 and 23
-\end{align*}
-\begin{align*}
-    \sum_{k=1}^{n} k =& \frac{n(n + 1)}{2}\\
-    \sum_{k=1}^{n} k^2 =& \frac{n(n + 1)(2n + 1)}{6}\\
-    \sum_{k=1}^{n} k^3 =& \frac{n^2 (n + 1)^2}{4}\\
-    \sum_{k=0}^{n} x^k =& \frac{x^{n+1} - 1}{x - 1} \text{ for } x \neq 1\\
-    \sum_{k=0}^{\infty} x^k =& \frac{1}{1 - x} \text{ for } |x| < 1\\
-    \sum_{k=1}^{n} \frac{1}{k} =& \ln n + O(1) (\rightarrow \gamma ~ 0.577 \ldots)\\
-    \sum_{i=1}^{n} 1^k \approx& \frac{n^{k +1}}{|k + 1|} \text{ if } k \neq -1\\
-    \lim_{n \rightarrow a} \frac{f(n)}{g(n)} =& \lim_{n \rightarrow a} \frac{f'(n)}{g'(n)}\\
-    \sum_{k=1}^{n} (a_k - a_{k - 1}) =& a_n - a_0\\
-    \sum_{k=0}^{n-1} (a_k- a_{k + 1}) =& a_0 - a_n\\
-    \sum_{k=0}^{\infty} x^k =& \frac{1}{1 - x}\\
-    \sum_{k=0}^{\infty} kx^k =& \frac{x}{(1 - x)^2}\\
-\end{align*}
-\begin{align*}
-    b^{\log_b y} =& y\\
-    x^a = b \Leftrightarrow & \log_x b = a\\
-    a^{\log_b n} =& n^{log_b a}\\
-    \log_a b =& \frac{\log_c b}{\log_c a} \text{ for } c > 0\\
-    \log(ab) =& \log a + \log b\\
-    \log(\frac{1}{a}) =& -\log a\\
-    \log(a^b) =& b \log a\\
-    \lg \prod_{k = 1}^{n} a_k =& \sum_{k = 1}^{n} \lg a_k\\
-    (\lg n)^{\lg n} =& n^{\lg \lg n}\\
-    n^{\frac{1}{\lg n}} =& 2\\
-    2^{\sqrt{2 \lg n}} =& n^{\sqrt{\frac{2}{\lg n}}}\\
-    (\sqrt{2})^{\lg n} =& \sqrt{n}\\
-% TODO: math: 16 and 17
-\end{align*}
-
-\subsection{Recurrences}
-\begin{align*}
-    T(n) =& aT(\frac{n}{b}) + D(n) + C(n)
-\end{align*}
-
-where $D$ is the time to divide the problem, and $C$ is the time to combine subsolutions.
-
-% TODO: rec: 11
-
-\begin{align*}
-    T(n) =& 2T(\lfloor \sqrt{n} \rfloor) + \lg n\\
-    T(2^m) =& 2T(2^{m/2}) + m \text{ where } m = \lg m\\
-    S(2m) =& 2S(m / 2) + m \text{ where } S(m) = T(2^m)\\
-    T(n) =& T(2^m) = S(m) = \Theta(m \lg m)\\
-        =& \Theta(\lg n \lg \lg n)
-\end{align*}
-
-
-\subsubsection{Master Theorem}
-\begin{description}
-    \item[Find] $a \geq 1$ and $b \geq 1$ such that $T(n) = a T\left(\frac n b\right) + f(n)$
-\end{description}
-\begin{align*}
-    T(n) = a T\left(\frac n b\right) + f(n) \\
-    \frac{f(n)}{n^{\log_b a}} \in O(n^{-\epsilon})  \Rightarrow& T(n) \in \Theta(n^{\log_b a})\\ &\text{ for some } \epsilon > 0 \\
-    \frac{f(n)}{n^{\log_b a}} \in \Theta(1) \Rightarrow& T(n) \in \Theta(n^{\log_b a} \lg n) \\
-    \frac{f(n)}{n^{\log_b a}} \in \Omega(n^{\epsilon}) \Rightarrow& T(n) \in \Theta(f(n))\\ &\text{ for some } \epsilon > 0 \\&\text{ and } af(\frac{n}{b}) \leq cf(n)\\ &\text{ for some } c < 1 \\
-    f(n) \in \Theta(n^{\log_b a} \lg^{k} n) \Rightarrow& T(n) \in \Theta(n^{\log_b a} \lg^{k + 1} n)\\ &\text{if } f(n) \text{ is larger}\\ &\text{but not polynomial larger than }\\ &n^{\log_b a}\\
-\end{align*}
-
-\begin{description}
-    \item[Polynomially Larger Than]
-\end{description}
-\begin{align*}
-    f(n) > g(n) \Leftrightarrow& \exists \epsilon. \epsilon > 0 \land f(n) \in \Omega(g(n) \cdot n^\epsilon)
-\end{align*}
-
-\begin{description}
-    \item[Regularity] $f$ in Case 3 must be regular
-\end{description}
-\begin{align*}
-    \exists c. c < 1 \land af\left(\frac n b\right) \leq cf(n)\\
-\end{align*}
 
 \subsubsection{Accounting method}
 \begin{compactitem}
@@ -157,10 +73,10 @@ for v in G.V
     for e in G.Adj(e)
         OPERATION
 \end{lstlisting}
-\begin{description}
+\begin{compactitem}
     \item[Complexity] $\Theta((V+E) \times OPERATION)$ for adjacency list.
     \item[Complexity] $\Theta((V+E) \times OPERATION + V^2)$ for adjacency matrix.
-\end{description}
+\end{compactitem}
 
 \begin{lstlisting}
 BFS(G,v)
@@ -180,12 +96,12 @@ BFS(G,v)
 \end{lstlisting}
 
 \subsubsection{Breadth First Search}
-\begin{description}
+\begin{compactitem}
     \item[Complexity] $\Theta(V+E)$ for adjacency list.
     \item[Complexity] $\Theta(V^2)$ for adjacency matrix.
     \item[Finds] breadth first tree of graph.
     \item[Finds] shortest path to each node from source, assuming equal weights.
-\end{description}
+\end{compactitem}
 
 % TODO: L3-2018: 46 back and forward edges
 \begin{lstlisting}
@@ -212,13 +128,13 @@ DFS-VISIT(G, u)
     time = time + 1
     u.finish = time
 \end{lstlisting}
-\begin{description}
+\begin{compactitem}
     \item[Complexity] Same as BFS, for both data structures
     \item[Finds] depth first forests of graph.
     \item[Finds] loops, if you find a grey vertex in DFS-VISIT.
     \item[Finds] a topological sort, if you output in descending order by $u.finish$.
     \item[Note] We find cycles in $O(|V|)$, because we never see back-edges after seeing $|V|$ distinct edges, since in any acyclic undirected forest, $|E| \leq |V| - 1$. 
-\end{description}
+\end{compactitem}
 
 \begin{lstlisting}
 STRONGLY-CONNECTED-COMPONENTS(G)
@@ -249,11 +165,11 @@ FIND-SET(x)
     // compresses path
     return x.p
 \end{lstlisting}
-\begin{description}
+\begin{compactitem}
     \item[Finds] Minimum spanning tree - subset of edges such that all vertices are connected and sum of edge weight is minimised.
     \item[Complexity] $\Theta(E\lg{E})$ using union-find trees
     \item[Notes] \texttt{UNION} ensures the tree with fewer nodes is made to point ot the tree with more nodes (to avoid updating \texttt{rank}) (unless they have equal rank, then you have to increment rank of the new representative)
-\end{description}
+\end{compactitem}
 
 \begin{lstlisting}
 PRIORITY-FIRST-SEARCH(G, s, ...)
@@ -269,25 +185,25 @@ RELAX(u, v, w)
         v.d = PRIORITY
         v.pi = u
 \end{lstlisting}
-\begin{description}
+\begin{compactitem}
     \item[Complexity] $\Theta(V)\cdot T_{EXTRACT} + \Theta(E)\cdot T_{DECREASE}$
     \item[Complexity] $O(E\lg{V})$ for binary heap ($\Theta(V) O(\lg V) + \Theta(E) O(\lg V)$).
     \item[Complexity] $O(E + V\lg{V})$ for fibonacci heap ($\Theta(V) O(\lg V)$ amor. + $\Theta(V) O(1)$ amor.).
-\end{description}
+\end{compactitem}
 
 \subsubsection{Prim's Minimum Spanning Tree}
 Priority first search with $PRIORITY(u, v, w) = w(u, v)$.
-\begin{description}
+\begin{compactitem}
     \item[Complexity] Same as priority first search.
     \item[Finds] Minimum spanning tree.
-\end{description}
+\end{compactitem}
 
 \subsubsection{Dijkstra'a Algorithm}
 Priority first search with $PRIORITY(u, v, w) = u.key + w(u, v)$.
-\begin{description}
+\begin{compactitem}
     \item[Complexity] Same as priority first search.
     \item[Finds] Single source shortest path to any node, assuming no negative edges.
-\end{description}
+\end{compactitem}
 
 \begin{lstlisting}
 BELLMAN-FORD(G, w, s)
@@ -301,12 +217,12 @@ BELLMAN-FORD(G, w, s)
     return TRUE
 \end{lstlisting}
 
-\begin{description}
+\begin{compactitem}
     \item[Complexity] $O(V\cdot E)$
     \item[Finds] Single source shortest path to any node, assuming no negative cycles.
     \item[Finds] The existence of negative cycles.
     \item[Note] For every vertex $v$, $v.d$ has reached its final value if the number of iterations $\geq$ the length of any shortest weight path to $v$.
-\end{description}
+\end{compactitem}
 
 % \begin{lstlisting}
 % d := |V| * |V| matrix init to inf
@@ -321,18 +237,18 @@ BELLMAN-FORD(G, w, s)
 %         d[i][j] <- d[i][k] + d[k][j]
 %       end if
 % \end{lstlisting}
-% \begin{description}
+% \begin{compactitem}
 %     \item[Complexity] $O(V^3)$
-% \end{description}
+% \end{compactitem}
 \subsection{Complexity theory}
-\begin{description}
+\begin{compactitem}
     \item[P] problems are those that can be solved in polynomial time by a deterministic turing machine.
     \item[NP] problems are those that can be solved in polynomial time by a nondeterministic turing machine.
         Also the problems that a solution (certificate) to which can be \emph{verified} in polynomial time by a deterministic turing machine.
     \item[NP hard] problems are problems that any problem in NP can be reduced to in polynomial time.
     \item[NP complete] problems are NP hard problems that are in NP.
     \item[P = NP] probably not.
-\end{description}
+\end{compactitem}
 
 \begin{align*}
 L \in NP \wedge L \in P &\Rightarrow P = NP\\
@@ -343,9 +259,111 @@ Say we can reduce an instance $\alpha$ of $A$ to an instance $\beta$ of $B$ in p
 
 Let $X$ be your own problem. If you can show that CIRCUIT-SAT is polynomial-time reducible to $X$, then $X$ is $NP$-hard. To show that $X$ is $NP$-complete you also need to show it is in $NP$.
 
-
 CIRCUIT-SAT, SAT, 3-CNF-SAT, CLIQUE (SUBSET-SUM), VERTEX-COVER, HAM-CYCLE, TSP
 
+\begin{align*}
+    f \in O(g) \Leftrightarrow& \forall n > n_0, 0 \leq f(n) \leq c \cdot g(n) \\
+    f \in \Theta(g) \Leftrightarrow& \forall n > n_0, 0 \leq c_1 \cdot g(n) \leq f(n) \leq c_2 \cdot g(n) \\
+    f \in \Omega(g) \Leftrightarrow& \forall n > n_0, 0 \leq c \cdot g(n) \leq f(n) \\
+    f \in o(g) \Rightarrow& \lim_{n \rightarrow \infty} \frac {f(n)} {g(n)} = 0 \\
+    f \in \omega(g) \Rightarrow& \lim_{n \rightarrow \infty} \frac {g(n)} {f(n)} = 0 \\
+    \sum_{k=1}^{n} k =& \frac{n(n + 1)}{2}\\
+    \sum_{k=1}^{n} k^2 =& \frac{n(n + 1)(2n + 1)}{6}\\
+    \sum_{k=1}^{n} k^3 =& \frac{n^2 (n + 1)^2}{4}\\
+    \sum_{k=0}^{n} x^k =& \frac{x^{n+1} - 1}{x - 1} \text{ for } x \neq 1\\
+\end{align*}
+\begin{align*}
+    \sum_{k=0}^{\infty} x^k =& \frac{1}{1 - x} \text{ for } |x| < 1\\
+    \sum_{k=1}^{n} \frac{1}{k} =& \ln n + O(1) (\rightarrow \gamma ~ 0.577 \ldots)\\
+    \sum_{i=1}^{n} 1^k \approx& \frac{n^{k +1}}{|k + 1|} \text{ if } k \neq -1\\
+    \lim_{n \rightarrow a} \frac{f(n)}{g(n)} =& \lim_{n \rightarrow a} \frac{f'(n)}{g'(n)}\\
+    \sum_{k=1}^{n} (a_k - a_{k - 1}) =& a_n - a_0\\
+    \sum_{k=0}^{n-1} (a_k- a_{k + 1}) =& a_0 - a_n\\
+    \sum_{k=0}^{\infty} x^k =& \frac{1}{1 - x}\\
+    \sum_{k=0}^{\infty} kx^k =& \frac{x}{(1 - x)^2}\\
+    b^{\log_b y} =& y\\
+    x^a = b \Leftrightarrow & \log_x b = a\\
+    a^{\log_b n} =& n^{log_b a}\\
+    \log_a b =& \frac{\log_c b}{\log_c a} \text{ for } c > 0\\
+    \log(ab) =& \log a + \log b\\
+    \log(\frac{1}{a}) =& -\log a\\
+    \log(a^b) =& b \log a\\
+    \lg \prod_{k = 1}^{n} a_k =& \sum_{k = 1}^{n} \lg a_k\\
+    (\lg n)^{\lg n} =& n^{\lg \lg n}\\
+    n^{\frac{1}{\lg n}} =& 2\\
+    2^{\sqrt{2 \lg n}} =& n^{\sqrt{\frac{2}{\lg n}}}\\
+    (\sqrt{2})^{\lg n} =& \sqrt{n}\\
+\end{align*}
+
+% TODO: rec: 11
+
+\subsubsection{Substitution}
+\begin{compactitem}
+    \item[Prove] $T(n) \leq cn \lg n$ for some suitable $c > 0$
+    \item[Assume] $T(n) \leq cn \lg n$ for $\lfloor n / 2 \rfloor$
+    \item[Such that] $T(\lfloor n / 2 \rfloor) \leq c \lfloor n / 2 \rfloor \lg \lfloor n / 2 \rfloor$
+\end{compactitem}
+\begin{align*}
+T(n) =& 2T(\lfloor n / 2 \rfloor) + 2\\
+     \leq& 2(c \lfloor n / 2 \rfloor \lg \lfloor n / 2 \rfloor) + n\\
+     \leq& cn \lg(n /2) + n\\
+     =& cn \lg n - cn \lg 2 + n
+     =& cn \lg n - cn + n\\
+     =&  cn \lg n \text{ for } c \geq 1\\
+\end{align*}
+\begin{align*}
+    T(n) =& 2T(\lfloor \sqrt{n} \rfloor) + \lg n\\
+    T(2^m) =& 2T(2^{m/2}) + m \text{ where } m = \lg m\\
+    S(2m) =& 2S(m / 2) + m \text{ where } S(m) = T(2^m)\\
+    T(n) =& T(2^m) = S(m) = \Theta(m \lg m)\\
+        =& \Theta(\lg n \lg \lg n)
+\end{align*}
+
+\subsubsection{Iteration}
+\begin{align*}
+T(n) =& 4T(n = 1) + 1\\
+     =& 4(4T(n - 2) + 1) + 1\\
+     =& 4^2T(n - 2) + 4 + 1\\
+     =& 4^2(4T(n - 3) + 1) + 4 + 1\\
+     =& 4^3T(n - 3) + 4^2 + 4 + 1\\
+     =& 4^iT(n - i) + \sum_{k =1}{i - 1} 4^k\\
+\end{align*}
+\begin{align*}
+\text{Assume } T(1) =& 1\\
+n - i =& 1\\
+    i =& n - 1\\
+T(n) =& 4^{n - 1}(1) + \sum_n{k = 0}^{n -2} 4^k\\
+     =& \sum_{k = 0}^{n - 2}\\
+     =& \sum_{k = 0}^{n - 1}\\
+     <& 4^n\\
+T(n) \in& O(4^n)\\
+\end{align*}
+
+\subsubsection{Master Theorem}
+\begin{compactitem}
+    \item[Find] $a \geq 1$ and $b \geq 1$ such that $T(n) = a T\left(\frac n b\right) + f(n)$
+\end{compactitem}
+\begin{align*}
+    T(n) = a T\left(\frac n b\right) + f(n) \\
+    \frac{f(n)}{n^{\log_b a}} \in O(n^{-\epsilon})  \Rightarrow& T(n) \in \Theta(n^{\log_b a})\\ &\text{ for some } \epsilon > 0 \\
+    \frac{f(n)}{n^{\log_b a}} \in \Theta(1) \Rightarrow& T(n) \in \Theta(n^{\log_b a} \lg n) \\
+    \frac{f(n)}{n^{\log_b a}} \in \Omega(n^{\epsilon}) \Rightarrow& T(n) \in \Theta(f(n))\\ &\text{ for some } \epsilon > 0 \\&\text{ and } af(\frac{n}{b}) \leq cf(n)\\ &\text{ for some } c < 1 \\
+    f(n) \in \Theta(n^{\log_b a} \lg^{k} n) \Rightarrow& T(n) \in \Theta(n^{\log_b a} \lg^{k + 1} n)\\ &\text{if } f(n) \text{ is larger}\\ &\text{but not polynomial larger than }\\ &n^{\log_b a}\\
+\end{align*}
+
+\begin{compactitem}
+    \item[Polynomially Larger Than]
+\end{compactitem}
+\begin{align*}
+    f(n) > g(n) \Leftrightarrow& \exists \epsilon. \epsilon > 0 \land f(n) \in \Omega(g(n) \cdot n^\epsilon)
+\end{align*}
+
+\begin{compactitem}
+    \item[Regularity] $f$ in Case 3 must be regular
+\end{compactitem}
+\begin{align*}
+    \exists c. c < 1 \land af\left(\frac n b\right) \leq cf(n)\\
+\end{align*}
 
 \end{multicols*}
 \end{document}
