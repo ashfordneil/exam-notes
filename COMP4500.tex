@@ -88,7 +88,7 @@ where $D$ is the time to divide the problem, and $C$ is the time to combine subs
     \frac{f(n)}{n^{\log_b a}} \in O(n^{-\epsilon})  \Rightarrow& T(n) \in \Theta(n^{\log_b a})\\ &\text{ for some } \epsilon > 0 \\
     \frac{f(n)}{n^{\log_b a}} \in \Theta(1) \Rightarrow& T(n) \in \Theta(n^{\log_b a} \lg n) \\
     \frac{f(n)}{n^{\log_b a}} \in \Omega(n^{\epsilon}) \Rightarrow& T(n) \in \Theta(f(n))\\ &\text{ for some } \epsilon > 0 \\&\text{ and } af(\frac{n}{b}) \leq cf(n)\\ &\text{ for some } c < 1 \\
-    f(n) \in \Theta(n^{\log_b a} \lg^{k} n) \Rightarrow& T(n) \in \Theta(n^{\log_b a} \lg^{k + 1} n)\\ &\text{if } f(n) \text{ is larger}\\ &\text{but not polynomial larger than } n^{\log_b a}\\
+    f(n) \in \Theta(n^{\log_b a} \lg^{k} n) \Rightarrow& T(n) \in \Theta(n^{\log_b a} \lg^{k + 1} n)\\ &\text{if } f(n) \text{ is larger}\\ &\text{but not polynomial larger than }\\ &n^{\log_b a}\\
 \end{align*}
 
 \begin{description}
@@ -162,6 +162,23 @@ for v in G.V
     \item[Complexity] $\Theta((V+E) \times OPERATION + V^2)$ for adjacency matrix.
 \end{description}
 
+\begin{lstlisting}
+BFS(G,v)
+  v.distance = 0 
+  v.colour = grey 
+  Q.init(); Q.enqueue(v)
+  while not Q.isEmpty()
+    current = Q.next()
+    for u in adjacent[current]
+      if u.colour == white
+        u.distance 
+          = current.distance + 1 
+        u.colour = grey 
+        u.parent = current 
+        Q.enqueue(u)
+  current.colour := black
+\end{lstlisting}
+
 \subsubsection{Breadth First Search}
 \begin{description}
     \item[Complexity] $\Theta(V+E)$ for adjacency list.
@@ -227,17 +244,18 @@ TOPOLOGICAL-SORT(G)
 
 \begin{lstlisting}
 MST-KRUSKAL(G, w)
-    A = {}
-    for u in G.V
-        MAKE-SET(u)
-    SORT(G.E, w)
-    for (u, v) in G.E
-        if FIND-SET(u) != FIND-SET(v)
-            A = A + {(u, v)}
-            UNION(u, v)
-    return A
+  A = {}
+  for u in G.V
+    MAKE-SET(u)
+  SORT(G.E, w)
+  for (u, v) in G.E
+    if FIND-SET(u) != FIND-SET(v)
+      A = A + {(u, v)}
+      UNION(u, v)
+  return A
+
 FIND-SET(x)
-if x != x.p
+  if x != x.p
     x.p = FIND-SET(x.p) 
     // compresses path
     return x.p
@@ -264,8 +282,8 @@ RELAX(u, v, w)
 \end{lstlisting}
 \begin{description}
     \item[Complexity] $\Theta(V)\cdot T_{EXTRACT} + \Theta(E)\cdot T_{DECREASE}$
-    \item[Complexity] $O(E\lg{V})$ for binary heap.
-    \item[Complexity] $O(E + V\lg{V})$ for fibonacci heap.
+    \item[Complexity] $O(E\lg{V})$ for binary heap ($\Theta(V) O(\lg V) + \Theta(E) O(\lg V)$).
+    \item[Complexity] $O(E + V\lg{V})$ for fibonacci heap ($\Theta(V) O(\lg V)$ amor. + $\Theta(V) O(1)$ amor.).
 \end{description}
 
 \subsubsection{Prim's Minimum Spanning Tree}
@@ -298,7 +316,7 @@ BELLMAN-FORD(G, w, s)
     \item[Complexity] $O(V\cdot E)$
     \item[Finds] Single source shortest path to any node, assuming no negative cycles.
     \item[Finds] The existence of negative cycles.
-    \item[Note] For every vertex $v$, $v.d$ has reached its final value if the number of iterations $\geq$ the length of any shortest weight path to $v$.7
+    \item[Note] For every vertex $v$, $v.d$ has reached its final value if the number of iterations $\geq$ the length of any shortest weight path to $v$.
 \end{description}
 
 \begin{description}
