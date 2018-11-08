@@ -297,6 +297,7 @@ L \in NPC &\Leftrightarrow L \in NPH \wedge L \in NP\\
     \item[Prove] $T(n) \leq cn \lg n$ for some suitable $c > 0$
     \item[Assume] $T(n) \leq cn \lg n$ for $\lfloor n / 2 \rfloor$
     \item[Such that] $T(\lfloor n / 2 \rfloor) \leq c \lfloor n / 2 \rfloor \lg \lfloor n / 2 \rfloor$
+    \item [Need to show] $\forall n \leq n_0 \cdot T(N) \leq cn$
 \end{compactitem}
 \begin{align*}
 T(n) =& 2T(\lfloor n / 2 \rfloor) + 2\\
@@ -306,6 +307,9 @@ T(n) =& 2T(\lfloor n / 2 \rfloor) + 2\\
      =& cn \lg n - cn + n\\
      \leq&  cn \lg n \text{ for } c \geq 1\\
 \end{align*}
+
+Adjust $n_0 > 3$ (as $c(1)\lg 1 = 0$), using base cases of $T(2)$ and $T(3)$, which are both satisfied for $c \geq 2$.
+
 \begin{align*}
     T(n) =& 2T(\lfloor \sqrt{n} \rfloor) + \lg n\\
     T(2^m) =& 2T(2^{m/2}) + m \text{ where } m = \lg m\\
