@@ -8,6 +8,7 @@
 \RequirePackage[landscape]{geometry}
 
 % remove margins
+\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm}
 
 % redefine section commands to use less space
 \makeatletter
