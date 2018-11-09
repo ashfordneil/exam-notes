@@ -3,7 +3,6 @@
 \usepackage{listings}
 
 \begin{document}
-\footnotesize
 \begin{multicols*}{3}
 
 \begin{center}
@@ -15,9 +14,9 @@
 
 \subsection{Definitions of Complexities}
 \begin{align*}
-    f(n) = \Theta(g(n)) \Leftrightarrow& \forall n > n_0, 0 \leq c_1 \cdot g(n) \leq f(n) \leq c_2 \cdot g(n) \\
-    f(n) = O(g(n)) \Leftrightarrow& \forall n > n_0, 0 \leq f(n) \leq c \cdot g(n) \\
-    f(n) = \Omega(g(n)) \Leftrightarrow& \forall n > n_0, 0 \leq c \cdot g(n) \leq f(n) \\
+    f(n) = \Theta(g(n)) \Leftrightarrow& \forall n > n_0, f(n) \in [c_1 \cdot g(n), c_2 \cdot g(n)] \\
+    f(n) = O(g(n)) \Leftrightarrow& \forall n > n_0, f(n) \in [0, c \cdot g(n)) \\
+    f(n) = \Omega(g(n)) \Leftrightarrow& \forall n > n_0, f(n) \in [c \cdot g(n), \infty) \\
     f(n) = o(g(n)) \Leftrightarrow& \lim_{n \rightarrow \infty} \frac {f(n)} {g(n)} = 0 \\
     f(n) = \omega(g(n)) \Leftrightarrow& \lim_{n \rightarrow \infty} \frac {g(n)} {f(n)} = 0 \\
 \end{align*}
@@ -90,11 +89,13 @@ for v in G.V
 STRONGLY-CONNECTED-COMPONENTS(G)
     call DFS(G)
     compute G^T
-    call DFS(G^T) but consider vertices in
-        decreasing order of u.f
-    return discrete trees of second search
+    call DFS(G^T) but consider vertices
+        in decreasing order of u.f
+    return discrete trees of second
+        search
 \end{lstlisting}
 
+\columnbreak
 \subsection{Kruskal's Minimum Spanning Tree}
 \begin{lstlisting}
 MST-KRUSKAL(G, w)
@@ -130,14 +131,15 @@ PRIORITY-FIRST-SEARCH(G, s, ...)
 \end{description}
 
 \subsection{Prim's Minimum Spanning Tree}
-Priority first search with \lstinline{PRIORITY(u, v, w) = w(u, v)}.
+Priority first search with
+\lstinline{P(u, v, w) = w(u, v)}.
 \begin{description}
     \item[Complexity] Same as priority first search.
     \item[Finds] Minimum spanning tree.
 \end{description}
 
 \subsection{Dijkstra'a Algorithm}
-Priority first search with \lstinline{PRIORITY(u, v, w) = u.key + w(u, v)}.
+Priority first search with \lstinline{P(u, v, w) = u.key + w(u, v)}.
 \begin{description}
     \item[Complexity] Same as priority first search.
     \item[Finds] Single source shortest path to any node, assuming no negative edges.
