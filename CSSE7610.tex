@@ -1,0 +1,167 @@
+\documentclass[landscape]{cheat}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{listings}
+
+\begin{document}
+\begin{multicols*}{3}
+
+\begin{center}
+\Large{\underline{CSSE7610 Cheat Sheet}} \\
+\end{center}
+
+%% START HERE
+\section{Mutual Exclusion and Verification}
+\begin{description}
+    \item[Mutual Exclusion] $\square \lnot(p1_\text{critical} \land p2_\text{critical})$.
+        No two processes are simultaneously in their critical sections.
+    \item[Freedom from Deadlock] $\square (p1_\text{attempt} \lor p2_\text{attempt}) \rightarrow
+        \lozenge (p1_\text{critical} \lor p2_\text{critical})$.
+        If some processes are attempting to enter the critical section, eventually one will succeed.
+    \item[Freedom from Starvation] $\forall n \square \left(pn_\text{attempt} \rightarrow \lozenge pn_\text{critical}\right)$.
+        If any process attempts to enter its critical section, eventually it will succeed.
+\end{description}
+
+\subsection{Fairness}
+\begin{description}
+    \item[Weak Fairness] If a scenario is continually enabled, it eventually appears in the scenario.
+    \item[Strong Fairness] is a mystery
+\end{description}
+
+\subsection{Linear Temporal Logic}
+\begin{description}
+    \item[$\square$ always] conditions must be true at all time stamps.
+    \item[$\lozenge$ eventually] conditions must be true at some future time stamp.
+\end{description}
+
+\section{Semaphores and Monitors}
+\begin{description}
+    \item[Semaphore] is a counter that can be incremented or decremented.
+        It will block before going negative.
+    \item[Monitor] is an object that can only be accessed (methods called on it) in one thread at a time.
+        It will block before running a method in one thread if its busy in another.
+    \item[Condition Variable] is a FIFO queue of sleeping processes.
+        It has operations like \lstinline{wait}, \lstinline{notify} and \lstinline{notifyAll}.
+\end{description}
+
+\section{Locks and Data Structures}
+\subsection{Lockless Techniques}
+\begin{description}
+    \item[Atomic References] support \lstinline{get}, and \lstinline{compareAndSwap} methods.
+    \item[Compare and Swap] in a loop to update state iff nobody else has updated state since you started.
+    \item[Back-offs] (exponential, random) in case of failed compare and swaps can ease load in case of contention.
+    \item[Queues] are an alternative to random back offs that are deterministic and minimal in waiting time.
+    \item[Cache Coherence] improves for other threads if you \lstinline{get} in a loop and ensure the value is correct before proceeding to \lstinline{getAndSet}.
+\end{description}
+
+\subsection{Locks}
+\begin{description}
+    \item[Fine grained] locking can improve rate at which concurrent threads access different parts of a data structure.
+    \item[Optimistic] locking can speed things up if you are doing more reads than writes to a data structure.
+\end{description}
+
+\section{Distributed Algorithms}
+\subsection{Problems}
+\begin{itemize}
+    \item Messages may take arbitrary time to be sent.
+    \item Messages are not guaranteed to arrive in order.
+\end{itemize}
+
+\subsubsection{Ricart-Agrawala}
+\begin{lstlisting}
+myNum = 0
+deferred = empty set
+main loop
+    myNum = chooseNumber
+    for all other nodes N
+        send(request, N, myID, myNum)
+    await replies from all other nodes
+    critical section
+    for all nodes N in deferred
+        remove N from deferred
+        send(reply, N, myID)
+receive loop
+    receive(request, source, reqNum)
+    if myNum < reqNum
+        defer(source)
+    else
+        send(reply, N, myID)
+\end{lstlisting}
+
+\begin{description}
+    \item[Inefficient] must contact all nodes every time.
+    \item[Inefficient] does not get faster even without contention.
+    \item[Starvation] \lstinline{chooseNumber} should choose a number that is larger than all other previously seen numbers.
+\end{description}
+
+\subsection{Neilsen-Mizuno}
+\begin{lstlisting}
+parent = {form a tree}
+deferred = 0
+holding = (parent == 0)
+main loop
+    if not holding
+        send(request, parent, myID, myID)
+        parent = 0
+        receive(token)
+    holding = false
+    critical section
+    if deferred != 0
+        send(token, deferred)
+        deferred = 0
+    else
+        holding = true
+receive loop
+    receive(request, source, originator)
+    if parent == 0
+        if holding
+            send(token, originator)
+            holding = false
+        else
+            deferred = originator
+    else
+        send(request, parent, myID, source)
+    parent = source
+\end{lstlisting}
+
+\begin{description}
+    \item[Tree] of nodes is maintained, with the root having the token.
+    \item[Efficient] automatically flattens the tree as the token moves around.
+    \item[Efficient] reduces the number of nodes that need to be contacted, especially in uncontested case.
+\end{description}
+
+\section{Real Time Sytems}
+
+\subsection{Priority}
+\begin{description}
+    \item[Preemption] is when a high priority task steals the CPU from a lower one.
+    \item[Priority inversion] is when a high priority task blocks waiting for a lower priority task to exit its critical section.
+    \item[Priority inheritance] transfers the priority of the blocked task onto the blocking task for the duration of its critical section.
+    \item[Priority ceiling locking] places priority on a monitor and lets tasks inherit that priority when locking the monitor.
+\end{description}
+
+\subsection{Process Scheduling}
+\begin{description}
+    \item[Deadline] when the process needs to be finished by.
+        Normally relative to its starting time.
+    \item[Period] how often the process starts.
+    \item[Execution time] how long the process takes to run.
+    \item[Release time] when the process is able to start (initial offset).
+\end{description}
+
+\subsection{Scheduling Algorithms}
+\begin{itemize}
+    \item Earliest deadline first.
+    \item Rate monotonic (priority is inverse of execution time).
+    \item Synchronous systems (calculated ahead of time with worst case execution times).
+\end{itemize}
+
+\subsection{Feasibility}
+\begin{enumerate}
+    \item Calculate the portion of time each process spends.
+    \item Sum the portions.
+    \item Feasibility occurs if the sum is less than 100\%.
+\end{enumerate}
+
+\end{multicols*}
+\end{document}
