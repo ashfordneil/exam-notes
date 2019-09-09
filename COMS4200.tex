@@ -1,0 +1,106 @@
+\documentclass[landscape]{cheat}
+\usepackage{amsmath}
+
+\begin{document}
+\footnotesize
+\begin{multicols*}{3}
+
+\begin{center}
+\Large{\underline{COMS4200 Cheat Sheet}} \\
+\end{center}
+
+\section{Queuing Theory}
+
+Put a diagram here.
+
+\subsection{Variables}
+\begin{description}
+    \item[$\lambda$] Arrival rate (average).
+    \item[$\mu$] Processing rate (average).
+    \item[$\rho$] Server utilisation (average).
+    \item[$N$] Customers in queue (average).
+    \item[$N_S$] Customers being served (average).
+    \item[$N_Q$] Customers in the queue (average).
+    \item[$T$] Time in system (average).
+    \item[$T_S$] Time being served (average).
+    \item[$T_Q$] Time in the queue (average).
+\end{description}
+
+\subsection{Common Equations}
+\begin{description}
+    \item[Little's Law] $N = T\lambda$
+    \item[Utilisation] $\rho = \frac \lambda \mu$
+    \item[Serving] $\frac 1 \mu = T_S$
+    \item[Queue] $N = N_S + N_Q$
+    \item[Time] $T = T_S + T_Q$
+\end{description}
+
+\subsection{Queue Notation}
+\begin{equation*}
+    A/B/s/q/p
+\end{equation*}
+\begin{description}
+    \item[A] Arrival distribution.
+    \item[B] Serving time distribution.
+    \item[s] Number of servers.
+    \item[q] Maximum queue length (default $\infty$).
+    \item[p] Maximum population size (default $\infty$).
+\end{description}
+
+\subsubsection{Distribution: Memoryless}
+Poisson distribution. Given by probability density function describing the
+chances of an event occurring at a given time.
+\begin{equation*}
+    P(t) = \lambda e^{-\lambda \cdot t}
+\end{equation*}
+\begin{description}
+    \item[Nonzero events $\in$ interval] $\int_{t_1}^{t_2}P(t)dt$
+    \item[$k$ events $\in t$ time] $P(t, k) = \frac {e^{-\lambda t} (\lambda t)^k}{k!}$
+    \item[Std deviation] $\sigma = \frac 1 \mu$
+\end{description}
+
+\subsubsection{Distribution: General}
+General or unknown distribution. Only statistical analysis can be performed, no
+analytic probability density function is known.
+\begin{description}
+    \item[$T_S$] Average or mean.
+    \item[Var($T_S$)] Standard deviation squared.
+\end{description}
+
+\subsubsection{System: M/M/1}
+\begin{description}
+    \item[Arrival] Poisson distribution.
+    \item[Serving behaviour] Poisson distribution.
+    \item[Queue length 0] $P_0 = 1-\rho$
+    \item[Queue length k] $P_k = (1-\rho)\cdot \rho^k$
+    \item[Queue length] $N = \frac \lambda {\mu - \lambda}$
+\end{description}
+
+\subsubsection{System: M/M/m}
+\begin{description}
+    \item[Modelled] as M/M/1 with $\mu' = n\cdot\mu$ \textbf{when} $N>m$
+    \item[Queue length 0]
+\end{description}
+\begin{equation*}
+    P_0 = \left(\sum_{n = 0}^{m-1}\frac {(n\rho)^n}{n!} + \frac {(m\rho)^m} {m!(1-\rho)} \right)^{-1}
+\end{equation*}
+\begin{description}
+    \item[All servers busy] $P_Q = \frac{P_0 (m\rho)^m} {m!(1-\rho)}$
+\end{description}
+
+\subsubsection{System: M/M/m/m}
+\begin{description}
+    \item[Relevant] as this is how phone interchanges work.
+    \item[Erlang blocking formula]
+\end{description}
+\begin{equation*}
+    P_B = \frac{\rho^m}{m! \sum_{n=0}^m \frac{\rho^n}{n!}}
+\end{equation*}
+
+\subsubsection{System: M/G/1}
+\begin{description}
+    \item[Queue] $N_Q = \frac{\lambda^2 \cdot Var(T_S) + \rho^2} {2(1-\rho)}$
+\end{description}
+
+\end{multicols*}
+\end{document}
